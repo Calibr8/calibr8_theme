@@ -1,0 +1,40 @@
+
+// Headings header
+// --------------------------------------------------
+
+.headings-indicator-tag-wrapper {
+  position: relative;
+}
+.headings-indicator-tag {
+  position: absolute;
+  z-index: 99;
+  left: 0;
+  top: 0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: "Open Sans", "Segoe UI", "Helvetica", sans-serif;
+  font-size: 10px;
+  line-height: 10px;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.headings-indicator-tag--h1 {
+  background-color: #001f3f;
+}
+.headings-indicator-tag--h2 {
+  background-color: #0074D9;
+}
+.headings-indicator-tag--h3 {
+  background-color: #7FDBFF;
+}
+.headings-indicator-tag--h4 {
+  background-color: #39CCCC;
+}
+.headings-indicator-tag--h5 {
+  background-color: #3D9970;
+}
+.headings-indicator-tag--h6 {
+  background-color: #2ECC40;
+}
+

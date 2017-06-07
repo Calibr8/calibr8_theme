@@ -1,0 +1,35 @@
+
+// Tabs
+// --------------------------------------------------
+
+ul.tabs {
+  @include clearfix();
+  margin: 0 0 $default-block-margin-bottom 0;
+  list-style: none;
+  border-bottom: $default-border;
+  li {
+    position: relative;
+    display: block;
+    float: left;
+    margin-bottom: -2px;
+    margin-right: 2rem;
+  }
+  a {
+    display: block;
+    padding: 0.5rem 0;
+    font-weight: 400;
+    border-bottom: solid 3px transparent;
+    color: $color-black;
+    &:before {
+      @include font-size(12, 0);
+    }
+  }
+  a:hover {
+    border-color: $color-link-hover;
+  }
+  li.active a,
+  li.is-active a {
+    font-weight: 700;
+    border-color: $color-primary;
+  }
+}

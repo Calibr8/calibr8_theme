@@ -1,0 +1,84 @@
+
+// Social media
+// --------------------------------------------------
+
+ul.social-menu {
+  li {
+    float: left;
+    &:not(:last-child) {
+      margin-right: 0.5rem;
+    }
+    a {
+      display: inline-block;
+      padding: 0.5rem;
+      color: $color-white;
+      background: $color-grey;
+      border-radius: 100%;
+      font-size: #{$icon-font-size}px;
+      line-height: 1;
+      text-align: center;
+      width: (ptr($icon-font-size) + 1rem);
+      height: (ptr($icon-font-size) + 1rem);
+      &:before {
+        margin: 0;
+      }
+      &:hover {
+        color: $color-white;
+      }
+    }
+  }
+  a.icon-social-facebook {
+    background-color: $color-social-facebook;
+    &:hover {
+      background-color: lighten($color-social-facebook, 10%);
+    }
+  }
+  a.icon-social-twitter {
+    background-color: $color-social-twitter;
+    &:hover {
+      background-color: lighten($color-social-twitter, 10%);
+    }
+  }
+  a.icon-social-linkedin {
+    background-color: $color-social-linkedin;
+    &:hover {
+      background-color: lighten($color-social-linkedin, 10%);
+    }
+  }
+  a.icon-social-googleplus {
+    background-color: $color-social-googleplus;
+    &:hover {
+      background-color: lighten($color-social-googleplus, 10%);
+    }
+  }
+  a.icon-social-instagram {
+    background-color: $color-social-instagram;
+    &:hover {
+      background-color: lighten($color-social-instagram, 10%);
+    }
+  }
+  a.icon-social-reddit {
+    background-color: $color-social-reddit;
+    &:hover {
+      background-color: lighten($color-social-reddit, 10%);
+    }
+  }
+  a.icon-social-mail {
+    background-color: $color-social-mail;
+    &:hover {
+      background-color: lighten($color-social-mail, 10%);
+    }
+  }
+  a.icon-social-youtube {
+    background-color: $color-social-youtube;
+    &:hover {
+      background-color: lighten($color-social-youtube, 10%);
+    }
+  }
+  // a.icon-social-rss {
+  //   background-color: $color-social-rss;
+  //   &:hover {
+  //     background-color: lighten($color-social-rss, 10%);
+  //   }
+  // }
+}

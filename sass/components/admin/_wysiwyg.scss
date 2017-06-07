@@ -1,0 +1,10 @@
+html {
+  max-width: 100%;
+  min-height: 200px;
+  overflow-y: auto;
+}
+
+body {
+  background: $color-white;
+  padding: $gutter;
+}

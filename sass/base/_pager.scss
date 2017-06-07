@@ -1,0 +1,87 @@
+
+// Pager
+// --------------------------------------------------
+
+.pager {
+  @include clearfix();
+}
+
+ul.pager-items {
+
+  // Globals
+  list-style: none;
+  position: relative;
+  display: block;
+  float: left;
+  left: 50%;
+  @include font-size($pager-font-size, $pager-font-size);
+  li.pager-item {
+    position: relative;
+    display: block;
+    float: left;
+    right: 50%;
+    margin: 0;
+    text-align: center;
+    a {
+      display: block;
+    }
+  }
+  li:not(:last-child) {
+    margin-right: 0.2rem;
+  }
+  li.pager-item a,
+  li.pager-ellipsis,
+  li.pager-current {
+    padding: $pager-padding;
+    min-width: ptr($pager-font-size) + ($pager-padding * 2);
+    border-radius: $button-border-radius;
+  }
+
+  // Icons
+  li.pager-item--first a {
+    @include icon('arrow-left-double');
+  }
+  li.pager-item--previous a {
+    @include icon('arrow-left');
+  }
+  li.pager-item--next a {
+    @include icon('arrow-right');
+  }
+  li.pager-item--last a {
+    @include icon('arrow-right-double');
+  }
+  
+  // Controls
+  li.pager-item--first,
+  li.pager-item--previous, 
+  li.pager-item--next,
+  li.pager-item--last {
+    a {
+      @extend .button;
+      padding: $pager-padding;
+      margin: 0;
+      line-height: #{ptr($pager-font-size)}px;
+    }
+    a:before {
+      @include font-size(12, 0);
+    }
+    span {
+      @extend .visually-hidden;
+    }
+  }
+
+  // Ellipis
+  li.pager-item--ellipsis {
+    color: $color-muted;
+  }
+
+  // Active item
+  li.is-active {
+    background-color: $color-primary;
+    border-radius: (ptr($pager-font-size) + ($pager-padding * 2) + (ptr(1) * 2)) / 2;
+    a {
+      color: $color-white;
+    }
+  }
+  
+}

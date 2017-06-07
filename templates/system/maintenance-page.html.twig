@@ -1,0 +1,57 @@
+{#
+/**
+ * @file
+ * Theme override to display a single Drupal page while offline.
+ *
+ * All available variables are mirrored in page.html.twig.
+ * Some may be blank but they are provided for consistency.
+ *
+ * @see template_preprocess_maintenance_page()
+ */
+#}
+<div id="site-wrapper">
+
+  <header class="region region--header">
+    <div class="container clearfix">
+      <div class="branding">
+        <div class="site-logo">
+          <img src="{{ logo }}" alt="{{ 'Home'|t }}" />
+        </div>
+        {% if site_name %}
+        <div class="site-name">{{ site_name }}</div>
+        {% endif %}
+        {% if site_slogan %}
+        <div class="site-slogan"><span>{{ site_slogan }}</span></div>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <div class="region region--content-info">
+    <div class="container">
+      {% if page.highlighted %}
+        {{ page.highlighted }}
+      {% endif %}
+      <a id="main-content" tabindex="-1"></a>
+    </div>
+  </div>
+
+  <div class="region region--content">
+    <div class="container">
+      <div class="row">
+        <div class="col col-md-6 col-offset-3" style="text-align: center;">
+          {{ page.content }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if page.footer %}
+  <footer class="region region--footer">
+    <div class="container">
+      {{ page.footer }}
+    </div>
+  </footer>
+  {% endif %}
+
+</div>

@@ -1,0 +1,163 @@
+{#
+/**
+ * @file
+ * Bartik's theme implementation to display a single page.
+ *
+ * The doctype, html, head and body tags are not in this template. Instead they
+ * can be found in the html.html.twig template normally located in the
+ * core/modules/system directory.
+ *
+ * Available variables:
+ *
+ * General utility variables:
+ * - base_path: The base URL path of the Drupal installation. Will usually be
+ *   "/" unless you have installed Drupal in a sub-directory.
+ * - is_front: A flag indicating if the current page is the front page.
+ * - logged_in: A flag indicating if the user is registered and signed in.
+ * - is_admin: A flag indicating if the user has permission to access
+ *   administration pages.
+ *
+ * Site identity:
+ * - front_page: The URL of the front page. Use this instead of base_path when
+ *   linking to the front page. This includes the language domain or prefix.
+ * - logo: The url of the logo image, as defined in theme settings.
+ * - site_name: The name of the site. This is empty when displaying the site
+ *   name has been disabled in the theme settings.
+ * - site_slogan: The slogan of the site. This is empty when displaying the site
+ *   slogan has been disabled in theme settings.
+
+ * Page content (in order of occurrence in the default page.html.twig):
+ * - node: Fully loaded node, if there is an automatically-loaded node
+ *   associated with the page and the node ID is the second argument in the
+ *   page's path (e.g. node/12345 and node/12345/revisions, but not
+ *   comment/reply/12345).
+ *
+ * Regions:
+ * - page.toolbar
+ * - page.branding
+ * - page.header
+ * - page.navigation
+ * - page.mobile_menu
+ * - page.help
+ * - page.highlighted
+ * - page.content_top
+ * - page.content
+ * - page.content_bottom
+ * - page.sidebar_left
+ * - page.sidebar_right
+ * - page.footer
+ *
+ * @see template_preprocess_page()
+ * @see calibr8_theme_preprocess_page()
+ * @see html.html.twig
+ */
+#}
+<div id="site-wrapper">
+
+  {% if page.toolbar %}
+  <nav class="region region--toolbar clearfix">
+    <div class="container">
+      <div class="toolbar-region-wrapper">
+        {{ page.toolbar }}
+      </div>
+    </div>
+  </nav>
+  {% endif %}
+
+  <header class="region region--header clearfix">
+    <div class="container">
+      <div class="region-header-inner clearfix">
+
+        {{ page.branding }}
+
+        {% if page.header %}
+          <div class="header-region">
+            {{ page.header }}
+          </div>
+        {% endif %}
+
+        <a href="#" id="mobile-menu-anchor" class="icon-menu show-mobile"><span class="element-invisible">{% trans %}Menu{% endtrans %}</span></a>
+
+      </div>
+    </div>
+
+    {% if page.navigation %}
+    <nav class="region region--navigation">
+      <div class="container">
+        {{ page.navigation }}
+      </div>
+    </nav>
+    {% endif %}
+
+    {% if page.mobile_menu %}
+    <nav id="mobile-menu" style="display: none;">
+      <div class="mobile-menu-inner">
+        {{ page.mobile_menu }}
+      </div>
+    </nav>
+    {% endif %}
+
+  </header>
+
+  {% if page.full_width %}
+  <div class="region region--full-width">
+    {{ page.full_width }}
+  </div>
+  {% endif %}
+
+  <div class="container">
+    <div class="row">
+
+      <div {{ content_attributes.addClass('content-wrapper') }}>
+
+        <div class="region region--content-info">
+          {% if page.highlighted %}
+            {{ page.highlighted }}
+          {% endif %}
+          <a id="main-content" tabindex="-1"></a>
+        </div>
+
+        {% if page.content_top %}
+        <div class="region region--content-top">
+          {{ page.content_top }}
+        </div>
+        {% endif %}
+
+        {% if page.content %}
+        <div class="region region--content">
+          {{ page.content }}
+        </div>
+        {% endif %}
+
+        {% if page.content_bottom %}
+        <div class="region region--content-bottom">
+          {{ page.content_bottom }}
+        </div>
+        {% endif %}
+
+      </div>
+
+      {% if page.sidebar_left %}
+      <aside {{ sidebar_left_attributes.addClass('region region--sidebar-left') }}>
+        {{ page.sidebar_left }}
+      </aside>
+      {% endif %}
+
+      {% if page.sidebar_right %}
+      <aside {{ sidebar_right_attributes.addClass('region region--sidebar-right') }}>
+        {{ page.sidebar_right }}
+      </aside>
+      {% endif %}
+
+    </div>
+  </div>
+
+  {% if page.footer %}
+  <footer class="region region--footer clearfix">
+    <div class="container">
+      {{ page.footer }}
+    </div>
+  </footer>
+  {% endif %}
+
+</div>

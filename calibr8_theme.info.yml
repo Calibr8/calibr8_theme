@@ -1,0 +1,38 @@
+name: Calibr8 Base theme
+description: 'Calibrate powered base theme.'
+type: theme
+package: Calibrate
+base theme: classy
+core: 8.x
+
+libraries:
+  - calibr8_theme/mediamatch
+  - calibr8_theme/enquire
+  - calibr8_theme/matchheight
+  - calibr8_theme/normalize
+
+regions:
+  toolbar: 'Toolbar'
+  branding: 'Branding'
+  header: 'Header'
+  navigation: 'Navigation'
+  help: 'Help'
+  highlighted: 'Highlighted'
+  full_width: 'Full width'
+  content_top: 'Content top'
+  content: 'Content'
+  content_bottom: 'Content bottom'
+  sidebar_left: 'Sidebar left'
+  sidebar_right: 'Sidebar right'
+  footer: 'Footer'
+  mobile_menu: 'Mobile menu'
+
+stylesheets-remove:
+  - '@classy/css/components/messages.css'
+  - '@classy/css/components/form.css'
+  - '@classy/css/components/tabs.css'
+  - '@classy/css/components/file.css'
+  - '@classy/css/components/pager.css'
+  - '@classy/css/components/icons.css'
+  - '@classy/css/components/button.css'
+  - '@classy/css/components/menu.css'

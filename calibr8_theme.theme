@@ -1,0 +1,432 @@
+<?php
+/**
+ * @file
+ * template.php
+ */
+
+use Drupal\Core\PhpStorage\PhpStorageFactory;
+use Drupal\node\Entity;
+use Drupal\Core\Menu;
+use Drupal\Core\Template\Attribute;
+
+/**
+ * Implements hook_page_attachments_alter()
+ */
+function calibr8_theme_page_attachments_alter(&$page) {
+  // Remove core favicon, to replace later with our bookmark icons
+  if(isset($page['#attached']['html_head_link'])) {
+    foreach($page['#attached']['html_head_link'] as $index => $head_link) {
+      $head_link = reset($head_link);
+      if(isset($head_link['rel']) && $head_link['rel'] == 'shortcut icon') {
+        unset($page['#attached']['html_head_link'][$index]);
+      }
+    }
+  }
+}
+
+/**
+* Implements hook_preprocess_html().
+*/
+function calibr8_theme_preprocess_html(&$variables) {
+
+  // Add class to front page.
+  $front = \Drupal::service('path.matcher')->isFrontPage();
+  if ($front) {
+    $variables['attributes']['class'][] = 'front';
+  }
+  elseif (!$front) {
+    $variables['attributes']['class'][] = 'not-front';
+  }
+
+  // Add class/library the authenticated users pages
+  // and unauthenticated users pages.
+  $auth = $variables['logged_in'];
+  if ($auth) {
+    $variables['attributes']['class'][] = 'logged-in';
+    // Add admin overrides lib when logged in
+    $variables['#attached']['library'][] = 'calibr8_theme/admin_overrides';
+    $variables['#attached']['library'][] = 'calibr8_admintheme/admin_menu';
+  }
+  elseif (!$auth) {
+   $variables['attributes']['class'][] = 'not-logged-in';
+  }
+
+  // Add classes to 404 & 403 pages.
+  try {
+    $request = \Drupal::request()->attributes->get('exception');
+    } catch (Exception $e) { /* .. Do nothing .. */
+  }
+  if (isset($request)) {
+    switch ($request->getStatusCode()) {
+      case 404:
+        $variables['attributes']['class'][] = 'page-error error-404';
+        break;
+      case 403:
+        $variables['attributes']['class'][] = 'page-error error-403';
+        break;
+    }
+  }
+
+  // Check for sidebars
+  if(isset($variables['page']['sidebar_left']) && isset($variables['page']['sidebar_right'])) {
+    $variables['attributes']['class'][] = 'both-sidebars';
+  }
+  else if(isset($variables['page']['sidebar_left'])) {
+    $variables['attributes']['class'][] = 'sidebar-left';
+  }
+  else if(isset($variables['page']['sidebar_right'])) {
+    $variables['attributes']['class'][] = 'sidebar-right';
+  }
+
+  // Development functionalities.
+  if (theme_get_setting('breakpoint_indicator')) {
+    $variables['attributes']['class'][] = 'breakpoint-indicator';
+    $variables['#attached']['library'][] = 'calibr8_theme/breakpoint_indicator';
+  }
+  if (theme_get_setting('grid_columns')) {
+    $variables['attributes']['class'][] = 'grid-columns';
+    $variables['#attached']['library'][] = 'calibr8_theme/grid_columns';
+  }
+  if (theme_get_setting('headings_indicator')) {
+    $variables['attributes']['class'][] = 'headings-indicator';
+    $variables['#attached']['library'][] = 'calibr8_theme/headings_indicator';
+  }
+
+  // Add apple touch icons
+  $registry = theme_get_registry();
+  if (!empty($registry['html']['bookmark-icons'])) {
+    $variables['bookmark_icons'] = $registry['html']['bookmark-icons'];
+  }
+
+}
+
+/**
+* Implements hook_preprocess_html().
+*/
+function calibr8_theme_preprocess_page(&$variables) {
+
+  // Create layout
+  $variables['content_attributes'] = new Attribute(array('class' => array('col')));
+  $variables['sidebar_left_attributes'] = new Attribute(array('class' => array('col')));
+  $variables['sidebar_right_attributes'] = new Attribute(array('class' => array('col')));
+  if(isset($variables['page']['sidebar_left']) && !empty($variables['page']['sidebar_left'])
+    && isset($variables['page']['sidebar_right']) && !empty($variables['page']['sidebar_right'])) {
+    $variables['content_attributes']['class'][] = 'col-md-8 col-lg-6 col-lg-push-3';
+    $variables['sidebar_left_attributes']['class'][] = 'col-md-4 col-lg-3 col-lg-pull-6';
+    $variables['sidebar_right_attributes']['class'][] = 'col-md-4 col-lg-3';
+  }
+  else if(isset($variables['page']['sidebar_left']) && !empty($variables['page']['sidebar_left'])) {
+    $variables['content_attributes']['class'][] = 'col-md-8 col-md-push-4 col-lg-9 col-lg-push-3';
+    $variables['sidebar_left_attributes']['class'][] = 'col-md-4 col-md-pull-8 col-lg-3 col-lg-pull-9';
+  }
+  else if(isset($variables['page']['sidebar_right']) && !empty($variables['page']['sidebar_right'])) {
+    $variables['content_attributes']['class'][] = 'col-md-8 col-lg-9';
+    $variables['sidebar_right_attributes']['class'][] = 'col-md-4 col-lg-3';
+  }
+}
+
+/**
+* Implements hook_preprocess_block().
+*/
+function calibr8_theme_preprocess_block(&$variables) {
+  switch($variables['base_plugin_id']) {
+    case 'system_branding_block':
+      $logo_png = str_replace('svg', 'png', $variables['site_logo']);
+      if(file_exists(ltrim($logo_png, '/'))) {
+        $variables['site_logo_png'] = $logo_png;
+      }
+    case 'system_menu_block':
+    case 'menu_block':
+      $variables['attributes']['class'][] = 'block';
+      $variables['attributes']['class'][] = 'block--menu';
+      $variables['attributes']['class'][] = 'block--menu--' . $variables['derivative_plugin_id'];
+      break;
+  }
+}
+
+/**
+* Implements hook_preprocess_node().
+* When using display suite this is called from calibr8_ds.module
+*/
+function calibr8_theme_preprocess_node(&$variables) {
+  // ksm('calibr8_theme_preprocess_node');
+  if(isset($variables['content']['#node'])) {
+    $node = $variables['content']['#node'];
+    $css_node_type = _calibr8_clean_css_identifier($node->getType());
+    $css_view_mode = _calibr8_clean_css_identifier($variables['content']['#view_mode']);
+
+    // Change modifier classes to use BEM syntax.
+    $variables['attributes']['class'] = preg_replace('/^node--type-' . $css_node_type . '$/', 'node--' . $css_node_type, $variables['attributes']['class']);
+    $variables['attributes']['class'] = preg_replace('/^node--view-mode-' . $css_view_mode . '$/', 'node--' . $css_view_mode, $variables['attributes']['class']);
+
+    // Add modifier classes for view mode.
+    $variables['attributes']['class'][] = 'node--' . $css_node_type . '--' . $css_view_mode;
+  }
+}
+
+/**
+* Implements hook_preprocess_taxonomy_term().
+* When using display suite this is called from calibr8_ds.module
+*/
+function calibr8_theme_preprocess_taxonomy_term(&$variables) {
+  // ksm('calibr8_theme_preprocess_taxonomy_term');
+  if(isset($variables['content']['#taxonomy_term'])) {
+    $term = $variables['content']['#taxonomy_term'];
+    $css_vocabulary_name = _calibr8_clean_css_identifier($term->getVocabularyId());
+    $css_view_mode = _calibr8_clean_css_identifier($variables['content']['#view_mode']);
+
+    // Change modifier classes to use BEM syntax.
+    $variables['attributes']['class'] = preg_replace('/^taxonomy-term' . '$/', 'term', $variables['attributes']['class']);
+    $variables['attributes']['class'] = preg_replace('/^taxonomy-term--type-' . $css_vocabulary_name . '$/', 'term--' . $css_vocabulary_name, $variables['attributes']['class']);
+    $variables['attributes']['class'] = preg_replace('/^taxonomy-term--view-mode-' . $css_view_mode . '$/', 'term--' . $css_view_mode, $variables['attributes']['class']);
+
+    // Add modifier classes for view mode.
+    $variables['attributes']['class'][] = 'term--' . $css_vocabulary_name . '--' . $css_view_mode;
+  }
+}
+
+/**
+* Implements hook_preprocess_user().
+* When using display suite this is called from calibr8_ds.module
+*/
+function calibr8_theme_preprocess_user(&$variables) {
+  // ksm('calibr8_theme_preprocess_user');
+  if(isset($variables['content']['#user'])) {
+    $user = $variables['content']['#user'];
+    $roles = $user->getRoles();
+    $css_view_mode = _calibr8_clean_css_identifier($variables['content']['#view_mode']);
+
+    // Remove dull user class
+    $index = array_search('user--type-user', $variables['attributes']['class']);
+    if($index !== FALSE) { unset($variables['attributes']['class'][$index]); }
+
+    // Change modifier classes to use BEM syntax.
+    $variables['attributes']['class'] = preg_replace('/^user--view-mode-' . $css_view_mode . '$/', 'user--' . $css_view_mode, $variables['attributes']['class']);
+
+    // Add class for each role
+    foreach($roles as $role) {
+      $css_role = _calibr8_clean_css_identifier($role);
+      $variables['attributes']['class'][] = 'user--' . $css_role;
+      // Add modifier classes for view mode.
+      $variables['attributes']['class'][] = 'user--' . $css_role . '--' . $css_view_mode;
+    }
+  }
+}
+
+/**
+* Implements hook_preprocess_field().
+*/
+function calibr8_theme_preprocess_field(&$variables) {
+  // ksm('calibr8_theme_preprocess_field');
+
+  $css_field_name = str_replace('field_', '', $variables['field_name']);
+  $css_field_name = _calibr8_clean_css_identifier($css_field_name);
+
+  $variables['attributes']['class'] = 'field--' . $css_field_name;
+
+}
+
+/**
+* Helper function to add the apple touch icons to the site.
+*/
+function _calibr8_bookmark_icons($theme) {
+
+  $base_url = _calibr8_get_base_url();
+  $theme_path = drupal_get_path('theme', $theme);
+  $bookmark_icons_path = $theme_path . '/bookmark-icons';
+  $icons = array();
+
+  // Favicon
+
+  if(file_exists($bookmark_icons_path . '/favicon.ico')) {
+    $href = ' href="' . $base_url . '/' . $bookmark_icons_path . '/favicon.ico"';
+    $icons[] = '<link rel="shortcut icon"' . $href . '>';
+  }
+
+  // Favicons (png)
+
+  $mask = '/^favicon(-([0-9]+x[0-9]+)).png$/';
+  if ($files = file_scan_directory($bookmark_icons_path, $mask, array('recurse' => FALSE))) {
+    foreach ($files as $file) {
+      // get href
+      $href = ' href="' . $base_url . '/' . $bookmark_icons_path . '/' . $file->filename . '"';
+      // get size
+      preg_match('/([0-9]{2,}[x][0-9]{2,})/', $file->filename, $matches);
+      $size =  $matches ? ' sizes="' . $matches[0] . '"' : '';
+      // return icon tag
+      $icons[] = '<link rel="icon" type="image/png"' . $href . $size . ' >';
+    }
+  }
+
+  // Apple
+
+  $mask = '/^apple-touch-icon(-([0-9]+x[0-9]+)).png$/';
+  if ($files = file_scan_directory($bookmark_icons_path, $mask, array('recurse' => FALSE))) {
+    foreach ($files as $file) {
+      // get href
+      $href = ' href="' . $base_url . '/' . $bookmark_icons_path . '/' . $file->filename . '"';
+      // get size
+      preg_match('/([0-9]{2,}[x][0-9]{2,})/', $file->filename, $matches);
+      $size =  $matches ? ' sizes="' . $matches[0] . '"' : '';
+      // return icon tag
+      $icons[] = '<link rel="apple-touch-icon"' . $href . $size . ' >';
+    }
+  }
+
+  // Android
+
+  $json = [
+    'name' => 'Hello',
+    'icons' => [],
+    'theme_color' => '',
+    'display' => 'standalone',
+  ];
+
+  if($site_name = \Drupal::config('system.site')->get('name')) {
+    $json['name'] = $site_name;
+  }
+
+  if($theme_color = theme_get_setting('android_theme_color')) {
+    $icons[] = '<meta name="theme-color" content="' . $theme_color . '">';
+    $json['theme_color'] = $theme_color;
+  }
+
+  $mask = '/^android-chrome(-([0-9]+x[0-9]+)).png$/';
+  if ($files = file_scan_directory($bookmark_icons_path, $mask, array('recurse' => FALSE))) {
+    foreach ($files as $file) {
+      // get href
+      $href = ' href="' . $base_url . '/' . $bookmark_icons_path . '/' . $file->filename . '"';
+      // get size
+      preg_match('/([0-9]{2,}[x][0-9]{2,})/', $file->filename, $matches);
+      $size =  $matches ? ' sizes="' . $matches[0] . '"' : '';
+      // return icon tag
+      $icons[] = '<link rel="icon" type="image/png"' . $href . $size . ' >';
+      // add to json
+      $json['icons'][] = [
+        'src' => $base_url . '/' . $bookmark_icons_path . '/' . $file->filename,
+        'sizes' => $matches[0],
+        'type' => 'image/png'
+      ];
+    }
+  }
+
+  // Generate JSON file
+  $manifest_path = $bookmark_icons_path . '/manifest.json';
+  if($manifest_file = fopen($manifest_path, "w")) {
+    fwrite($manifest_file, json_encode($json, JSON_UNESCAPED_SLASHES));
+    fclose($manifest_file);
+    // add JSON file to theme
+    $href = ' href="' . $base_url . '/' . $manifest_path . '"';
+    $icons[] = '<link rel="manifest"' . $href . ' />';
+  }
+
+  // Windows
+
+  if($tile_color = theme_get_setting('windows_tile_color')) {
+    $icons[] = '<meta name="msapplication-TileColor" content="' . $tile_color . '">';
+  }
+  if(file_exists($bookmark_icons_path . '/mstile-144x144.png')) {
+    $content = ' content="' . $base_url . '/' . $bookmark_icons_path . '/mstile-144x144.png"';
+    $icons[] = '<meta name="msapplication-TileImage"' . $content . '>';
+  }
+
+  // Generate XML file
+  $browserconfig_path = $bookmark_icons_path . '/browserconfig.xml';
+
+  if($browserconfig_file = fopen($browserconfig_path, "w")) {
+
+    // start xml file
+    $xml = '<?xml version="1.0" encoding="utf-8"?>' . PHP_EOL . '<browserconfig>' . PHP_EOL . '  <msapplication>' . PHP_EOL . '    <tile>' . PHP_EOL;
+
+    if(file_exists($bookmark_icons_path . '/mstile-70x70.png')) {
+      // get src
+      $content = ' src="' . $base_url . '/' . $bookmark_icons_path . '/mstile-70x70.png"';
+      $xml .= '       <square70x70logo' . $content . '/>' . PHP_EOL;
+    }
+    if(file_exists($bookmark_icons_path . '/mstile-150x150.png')) {
+      // get src
+      $content = ' src="' . $base_url . '/' . $bookmark_icons_path . '/mstile-150x150.png"';
+      $xml .= '       <square150x150logo' . $content . '/>' . PHP_EOL;
+    }
+    if(file_exists($bookmark_icons_path . '/mstile-310x150.png')) {
+      // get src
+      $content = ' src="' . $base_url . '/' . $bookmark_icons_path . '/mstile-310x150.png"';
+      $xml .= '       <wide310x150logo' . $content . '/>' . PHP_EOL;
+    }
+    if(file_exists($bookmark_icons_path . '/mstile-310x310.png')) {
+      // get src
+      $content = ' src="' . $base_url . '/' . $bookmark_icons_path . '/mstile-310x310.png"';
+      $xml .= '      <square310x310logo' . $content . '/>' . PHP_EOL;
+    }
+
+    if($tile_color = theme_get_setting('windows_tile_color')) {
+      $xml .= '      <TileColor>' . $tile_color . '</TileColor>' . PHP_EOL;
+    }
+
+    // end xml file
+    $xml .= '    </tile>' . PHP_EOL . '  </msapplication>' . PHP_EOL . '</browserconfig>';
+    // write xml file
+    fwrite($browserconfig_file, $xml);
+    fclose($browserconfig_file);
+
+    // add xml file to theme
+    $content = ' content="' . $base_url . '/' . $bookmark_icons_path . '/browserconfig.xml"';
+    $icons[] = '<meta name="msapplication-config"' . $content . ' />';
+
+  } else {
+    drupal_set_message('Unable to create browserconfig XML.', 'error');
+  }
+
+  return $icons;
+}
+
+/**
+ * Helper function to add media queries to the libraries.
+ */
+function _calibr8_media_queries($theme) {
+
+  // Get breakpoints from the theme
+  $breakpointManager = \Drupal::service('breakpoint.manager');
+  $breakpoints = $breakpointManager->getBreakpointsByGroup($theme);
+
+  // Attach the breakpoints to drupalSettings
+  $media_queries = array();
+  foreach ($breakpoints as $id => $breakpoint) {
+    $key = explode('.', $id)[1];
+    $media_queries[$key] = $breakpoint->getMediaQuery();
+  }
+
+  return $media_queries;
+}
+
+/*
+ * Helper function from D7 which is missing in D8
+ */
+function _calibr8_clean_css_identifier($identifier, $filter = array(' ' => '-', '_' => '-', '__' => '__', '/' => '-', '[' => '-', ']' => '')) {
+  // By default, we filter using Drupal's coding standards.
+  $identifier = strtr($identifier, $filter);
+
+  // Valid characters in a CSS identifier are:
+  // - the hyphen (U+002D)
+  // - a-z (U+0030 - U+0039)
+  // - A-Z (U+0041 - U+005A)
+  // - the underscore (U+005F)
+  // - 0-9 (U+0061 - U+007A)
+  // - ISO 10646 characters U+00A1 and higher
+  // We strip out any character not in the above list.
+  $identifier = preg_replace('/[^\x{002D}\x{0030}-\x{0039}\x{0041}-\x{005A}\x{005F}\x{0061}-\x{007A}\x{00A1}-\x{FFFF}]/u', '', $identifier);
+
+  return $identifier;
+}
+
+/*
+ * Help function to get $base_url
+ * base_url is not returning https, so we have to create a workaround
+ */
+function _calibr8_get_base_url() {
+  global $base_url;
+  if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') {
+    return str_replace('http://', 'https://', $base_url);
+  }
+  return $base_url;
+}

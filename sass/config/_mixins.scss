@@ -1,0 +1,377 @@
+
+// Mixins
+// --------------------------------------------------
+
+// CLEARFIX
+
+@mixin clearfix() {
+  &:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+}
+
+// Unit conversion
+// --------------------------------------------------
+
+// STRIP UNIT
+// Strip any unit from numeric variables.
+
+@function strip-unit($num) {
+  @return $num / ($num * 0 + 1);
+}
+
+// PIXELS TO REM
+// Convert a pixels value to rems.
+
+@function ptr($num, $showUnit: false) {
+  @if ($showUnit) {
+    @return #{strip-unit($num) / 16}rem;
+  }
+  @return strip-unit($num) / 16;
+}
+
+// REM TO PIXELS
+// Convert a rems value to pixels.
+
+@function rtp($num, $showUnit: false) {
+  @if ($showUnit) {
+    @return #{strip-unit($num) * 16}px;
+  }
+  @return strip-unit($num) * 16;
+}
+
+// Fonts
+// --------------------------------------------------
+
+// FONT FACE
+// Include font files from the fonts folder.
+// $font-path is set in config/_settings.scss
+// - $name: the name of the font to be used in CSS
+// - $font-weight: bold or normal
+// - $font-style: normal or italic
+// - $filename: filename without extension
+
+@mixin font-face($name, $font-weight, $font-style, $filename) {
+  @font-face {
+    font-family: $name;
+    src: url('#{$font-path}#{$filename}.eot');
+    src: url('#{$font-path}#{$filename}.eot?#iefix') format('embedded-opentype'),
+         // url('#{$font-path}#{$filename}.woff2') format('woff2'),
+         url('#{$font-path}#{$filename}.woff') format('woff'),
+         url('#{$font-path}#{$filename}.ttf') format('truetype'),
+         url('#{$font-path}#{$filename}.svg##{$filename}') format('svg');
+    font-weight: $font-weight;
+    font-style: $font-style;
+  }
+}
+
+// FONT SIZE
+// Converts a points value to rems and adds a default
+// line-height bases on $line-height-factor.
+// Examples:
+// - @include font-size(24, 18)
+// - @include font-size(24, 0) will return no line-height
+
+@mixin font-size($values...) {
+  $max: length($values);
+  $font-size: 16 !default;
+  $line-height: false !default;
+
+  // If font-size is supplied, override default
+  @if $max != 0 {
+    $font-size: nth($values, 1);
+  }
+  // If line-height is supplied, override default
+  @if $max > 1 and type-of(nth($values, 2)) == number {
+    $line-height: nth($values, 2);
+  }
+  // Else calculate line-height using $font-size
+  @else if $line-height == false {
+    $line-height: $font-size * $line-height-factor;
+  }
+  // Output supplied values
+  @if $max != 0 {
+    @if nth($values, $max) == "!important" {
+      font-size: $font-size / 16 + rem !important;
+      @if $line-height != 0 {
+        line-height: $line-height / 16 + rem !important;
+      }
+    }
+    @else {
+      font-size: $font-size / 16 + rem;
+      @if $line-height != 0 {
+        line-height: $line-height / 16 + rem;
+      }
+    }
+  }
+  // Else output default values
+  @else {
+    font-size: $font-size / 16 + rem;
+    line-height: $line-height / 16 + rem;
+  }
+}
+
+// FONT SMOOTHING
+// Better text rendering for modern browsers.
+
+@mixin font-smoothing($value: antialiased) {
+  @if $value == antialiased {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  @else {
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+  }
+}
+
+// Breakpoints and Media Queries
+// --------------------------------------------------
+
+// BREAKPOINT EXTRACT
+// Extract the numeric value from media query.
+// - $mq: media query
+
+@function bp-extract($mq) {
+  $num-start: str-index($mq, ': ') + 2;
+  $num-end: str-index($mq, 'px') - 1;
+  $num: str-slice($mq, $num-start, $num-end);
+  @return unquote($num);
+}
+
+// BREAKPOINT
+// Creates a media query.
+// - $point:    sm, md, lg, xl
+// - $limiter:  min (default), max, only
+
+@mixin bp($point, $limiter: min) {
+
+  @if $point == retina {
+    @media only screen and (-webkit-min-device-pixel-ratio: 2),
+           only screen and (min--moz-device-pixel-ratio: 2),
+           only screen and (min-device-pixel-ratio: 2) { @content; }
+  }
+  @else {
+
+    @if $limiter == min {
+      @if $point == sm {
+        @media only screen and (min-width: $sm-width) { @content; }
+      }
+      @else if $point == md {
+        @media only screen and (min-width: $md-width) { @content; }
+      }
+      @else if $point == lg {
+        @media only screen and (min-width: $lg-width) { @content; }
+      }
+      @else if $point == xl {
+        @media only screen and (min-width: $xl-width) { @content; }
+      }
+    }
+
+    @if $limiter == max {
+      @if $point == sm {
+        @media only screen and (max-width: (unquote($md-width) - 0.01)) { @content; }
+      }
+      @else if $point == md {
+        @media only screen and (max-width: (unquote($lg-width) - 0.01) + 'px') { @content; }
+      }
+      @else if $point == lg {
+        @media only screen and (max-width: (unquote($xl-width) - 0.01) + 'px') { @content; }
+      }
+      @else if $point == xl {
+        @content;
+      }
+    }
+
+    @if $limiter == only {
+      @if $point == sm {
+        @media only screen and (min-width: $sm-width) and (max-width: (unquote($md-width) - 0.01) + 'px') { @content; }
+      }
+      @else if $point == md {
+        @media only screen and (min-width: $md-width) and (max-width: (unquote($lg-width) - 0.01) + 'px') { @content; }
+      }
+      @else if $point == lg {
+        @media only screen and (min-width: $lg-width) and (max-width: (unquote($xl-width) - 0.01) + 'px') { @content; }
+      }
+      @else if $point == xl {
+        @media only screen and (min-width: $xl-width) { @content; }
+      }
+      @else {
+        @content;
+      }
+    }
+
+  }
+}
+
+// Grid
+// --------------------------------------------------
+
+// CONTAINER
+// Include CSS for grid container.
+
+@mixin container() {
+  position: relative;
+  margin: auto;
+  padding-left: $gutter;
+  padding-right: $gutter;
+  max-width: $max-site-width;
+}
+
+// ROW
+// Include CSS for grid row.
+
+@mixin row() {
+  @include clearfix();
+  margin-left: -$gutter/2;
+  margin-right: -$gutter/2;
+}
+
+// COLUMN
+// Include CSS for grid column.
+
+@mixin col() {
+  position: relative;
+  float: left;
+  padding-left: $gutter/2;
+  padding-right: $gutter/2;
+  width: 100%;
+}
+
+// COLUMNS
+// Assign a specified width (number of columns)
+// to a previous defined column.
+
+@mixin cols($values...) {
+  $max: length($values);
+  @if ($max != 0) {
+    $cols: nth($values, 1);
+    width: cols-width($cols);
+  } @else {
+    width: 100%;
+  }
+}
+
+// COLUMNS WIDTH
+// Return the width (percentage) of certain amount of columns
+
+@function cols-width($cols) {
+  @return percentage($cols / $grid-columns);
+}
+
+// COLUMNS OFFSET
+// Assign a specified offset (number of columns)
+// to a previous defined column.
+
+@mixin cols-offset($values...) {
+  $max: length($values);
+  @if ($max != 0) {
+    $cols: nth($values, 1);
+    margin-left: 100% / ($grid-columns/$cols);
+  }
+}
+
+// COLUMNS PUSH
+// Assign a specified push (number of columns)
+// to a previous defined column.
+
+@mixin cols-push($values...) {
+  $max: length($values);
+  @if ($max != 0) {
+    $cols: nth($values, 1);
+    left: 100% / ($grid-columns/$cols);
+  }
+}
+
+// COLUMNS PULL
+// Assign a specified push (number of columns)
+// to a previous defined column.
+
+@mixin cols-pull($values...) {
+  $max: length($values);
+  @if ($max != 0) {
+    $cols: nth($values, 1);
+    right: 100% / ($grid-columns/$cols);
+  }
+}
+
+// Compatibility
+// --------------------------------------------------
+
+// APPEARANCE
+// https://github.com/postcss/autoprefixer#why-doesnt-autoprefixer-support-appearance
+
+@mixin appearance($style) {
+  -moz-appearance: $style;
+  -webkit-appearance: $style;
+  appearance: $style;
+}
+
+// LINEAR GRADIENT
+// Creates a linear gradient with color fallback.
+// Example: @include linear-gradient(left, rgba($color-black, 1) 0%, rgba($color-white, 1) 100%);
+
+@mixin linear-gradient($direction, $color-stops...) {
+  background: nth(nth($color-stops, 1), 1);
+  background: -webkit-linear-gradient(legacy-direction($direction), $color-stops);
+  background: linear-gradient($direction, $color-stops);
+}
+
+// Icons
+// --------------------------------------------------
+
+// ICON
+// Add icon font character to element.
+
+@mixin icon($icon, $position: "before", $replace: false, $breakpoint: false) {
+  @if $replace {
+    font-size: 0;
+  }
+  &:#{$position} {
+    @extend .icon-#{$icon}:before;
+    font-family: $icon-font;
+    speak: none;
+    @include font-size($icon-font-size, 0);
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    @if $replace and $breakpoint == false {
+      font-size: 1rem;
+    } @else if $breakpoint {
+      font-size: 0;
+    }
+    @content;
+  }
+  @if $breakpoint {
+    @include breakpoint($breakpoint){
+      &:#{$position} {
+        @include font-size($default-font-size, 0);
+      }
+    }
+  }
+}
+
+// HIDE ICON TEXT
+// Hide the text for element containing the icon.
+// - $font-size: font size for the icon
+// - $color: color for the icon
+
+@mixin hide-icon-text($font-size: $icon-font-size, $color: $color-text) {
+  font-size: 1px;
+  line-height: 1px;
+  letter-spacing: -1px;
+  color: transparent;
+  &:before,
+  &:after {
+    @include font-size($font-size, 0, !important);
+    color: $color;
+    margin: 0;
+    @content;
+  }
+}

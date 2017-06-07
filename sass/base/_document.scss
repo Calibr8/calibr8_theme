@@ -1,0 +1,38 @@
+
+// Document
+// --------------------------------------------------
+
+// Box Sizing
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+// Prevent scrollbars
+
+html, body {
+  overflow-x: hidden; // necessary for extend classes
+}
+html  {
+  -webkit-text-size-adjust: none; // Prevent font scaling in landscape
+  -webkit-overflow-scrolling: touch;
+  font-size: 16px;
+}
+body {
+  overflow: hidden;
+}
+
+// Document settings
+
+body {
+  font-family: $default-font;
+  font-weight: 400;
+  line-height: 1.6;
+  color: $color-text;
+  background-color: $color-background;
+  @include font-smoothing(antialiased);  
+  font-variant-ligatures: none; // turn off ligatures
+  @include font-size($default-font-size);
+}

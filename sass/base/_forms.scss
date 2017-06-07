@@ -1,0 +1,282 @@
+
+// Forms
+// --------------------------------------------------
+
+// Reset
+
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="text"],
+input[type="tel"],
+input[type="url"],
+input[type="password"],
+input[type="date"],
+input[type="time"],
+textarea {
+  @include appearance(none);
+}
+
+fieldset {
+  padding: 0;
+  border-width: 0;
+  > legend {
+    @extend label;
+  }
+}
+
+// Form item
+
+.form-item {
+  margin-bottom: 2rem;
+}
+
+// Labels
+
+.form-item {
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+}
+.webform-element--title-inline {
+  label {
+    display: inline-block;
+    margin-bottom: 0;
+    width: 12rem;
+  }
+  .description {
+    padding-left: 12rem;
+  }
+}
+
+// Description
+
+.form-item {
+  .description {
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    p, ul, li {
+      margin-bottom: 0;
+    }
+  }  
+}
+
+// Prefix
+
+.field-prefix {
+  margin-right: 0.5rem;
+}
+
+// Suffix
+
+.field-suffix {
+  margin-left: 0.5rem;
+}
+
+// Form elements
+// --------------------------------------------------
+
+// Text fields
+
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="text"],
+input[type="tel"],
+input[type="url"],
+input[type="password"],
+input[type="date"],
+input[type="time"],
+input.form-color {
+  height: 38px;
+  padding: 6px 10px;
+  /* The 6px vertically centers text on FF, ignored by Webkit */
+  background-color: $form-background;
+  border: $form-border;
+  border-radius: $form-border-radius;
+  box-shadow: none;
+  box-sizing: border-box;
+  @include font-size($form-font-size);
+  transition: border $default-transition;
+  max-width: 100%;
+  &:hover {
+    border: solid 1px $color-form-hover;
+    outline: 0;
+  }
+  &:focus {
+    border: solid 1px $color-form-focus;
+    outline: 0;
+  }
+}
+
+// Textarea
+
+textarea {
+  height: 38px;
+  padding: 6px 10px;
+  /* The 6px vertically centers text on FF, ignored by Webkit */
+  background-color: $form-background;
+  border: $form-border;
+  border-radius: $form-border-radius;
+  box-shadow: none;
+  box-sizing: border-box;
+  @include font-size($form-font-size);
+  min-height: 65px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  transition: border $default-transition;
+  &:hover {
+    border: solid 1px $color-form-hover;
+    outline: 0;
+  }
+  &:focus {
+    border: solid 1px $color-form-focus;
+    outline: 0;
+  }
+}
+
+// Select
+
+select {
+  height: 38px;
+  padding: 6px 10px;
+  /* The 6px vertically centers text on FF, ignored by Webkit */
+  background-color: $form-background;
+  border: $form-border;
+  border-radius: $form-border-radius;
+  box-shadow: none;
+  box-sizing: border-box;
+  transition: border $default-transition;
+  &:hover {
+    border: solid 1px $color-form-hover;
+    outline: 0;
+  }
+  &:focus {
+    border: solid 1px $color-form-focus;
+    outline: 0;
+  }
+}
+
+.form-type-webform-select-other > .form-type-select {
+  margin-bottom: 0;
+}
+.webform-select-other-input {
+  margin-top: 1rem;
+}
+
+// Checkbox
+
+.form-type-checkbox {
+  input {
+    margin-right: 0.5rem;
+  }
+  label {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+  }
+}
+
+.form-checkboxes {
+  .form-type-checkbox:not(:last-child) {
+    margin-bottom: 0.25rem;
+  }
+  .form-type-checkbox:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Radio
+
+.form-type-radio {
+  input {
+    margin-right: 0.5rem;
+  }
+  label {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+  }
+}
+
+.form-radios {
+  .form-type-radio {
+    margin-bottom: 0.25rem;
+  }
+  .form-type-radio:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// YAML multiple columns
+
+.webform-options-display-two-columns,
+.webform-options-display-three-columns {
+  margin: 0;
+}
+
+// Color
+
+input[type="color"] {
+  border: 0 none !important;
+  border-top-left-radius: $form-border-radius;
+  border-bottom-left-radius: $form-border-radius;
+}
+input.form-color-output {
+  border: $form-border;
+  border-radius: $form-border-radius;
+  &, &:hover, &:focus {
+    border-left: 0 none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;  
+  }
+}
+
+// Signature
+
+.webform-signature-pad {
+  background: $form-background;
+  border: $form-border;
+  border-radius: $form-border-radius;
+}
+
+// Toggle 
+
+.form-type-webform-toggle {
+  .description {
+    clear: both;
+  }
+}
+
+// jQuery UI overides
+// --------------------------------------------------
+
+.ui-widget {
+  font-family: $default-font;
+  @include font-size($form-font-size);
+}
+
+// Autocomplete
+
+.ui-autocomplete {
+  border: none;  
+  background: $form-background;
+  .ui-menu-item {
+    position: relative;
+    z-index: 1;
+    margin: -1px 0 0;
+    padding: ($form-padding/2) $form-padding;
+    border: $form-border;
+    transition: border $default-transition;
+    &:last-child {
+      border-bottom-left-radius: $form-border-radius;
+      border-bottom-right-radius: $form-border-radius;
+    }
+  }
+  .ui-state-focus {
+    z-index: 2;
+    background: none;
+    border: solid 1px $color-form-focus;
+  }
+}

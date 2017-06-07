@@ -1,0 +1,174 @@
+
+// Buttons
+// --------------------------------------------------
+
+.button, button,
+input[type="submit"], input[type="reset"], input[type="button"] {
+  display: inline-block;
+  padding: 0.6rem 2rem;
+  color: $color-button;
+  text-align: center;
+  @include font-size(12);   
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  background-color: transparent;
+  border-radius: $button-border-radius;
+  border: $button-border;
+  cursor: pointer;
+  transition: $default-transition;
+  margin-bottom: 1rem;
+  &:hover,
+  &:focus {
+      outline: 0;
+      text-decoration: none;
+      color: $color-white;
+      border-color: $color-link-hover;
+      background-color: $color-link-hover;
+  }
+  &[class^='icon-'],
+  &[class*=' icon-'] {
+    line-height: 1rem;
+    &:before,
+    &:after {
+      display: inline-block;
+      margin-bottom: -0.2rem;
+    }
+    &:before {
+      margin-right: 0.4rem;
+    }
+    &:after {
+      margin-left: 0.4rem;
+    }
+  }
+  &.hide-text {
+    @include hide-icon-text(16, $color-button);
+    width: 2.45rem;
+    height: 2.45rem;
+    padding: 0.6rem;
+  }
+}
+
+// Small
+.button-small {
+  @include font-size(10);
+  padding: 0.2rem 0.5rem;
+  &:before {
+    margin-right: 0.2rem;
+  }
+  &:after {
+    margin-left: 0.2rem;
+  }
+}
+
+// Large
+.button-large {
+  @include font-size(14);
+  padding: 0.8rem 2rem;
+}
+
+// Primary
+.button-primary {
+    color: $color-white;
+    background-color: $color-primary;
+    border: solid 1px $color-primary;
+}
+.button-primary:hover,
+.button-primary:focus {
+    color: $color-white;
+    background-color: lighten($color-primary, 10%);
+    border-color: lighten($color-primary, 10%);
+}
+// Secondary
+.button-secondary {
+    color: $color-white;
+    background-color: $color-secondary;
+    border: solid 1px $color-secondary;
+}
+.button-secondary:hover,
+.button-secondary:focus {
+    color: $color-white;
+    background-color: lighten($color-secondary, 10%);
+    border-color: lighten($color-secondary, 10%);
+}
+
+// Grey
+.button-muted {
+    color: $color-white;
+    background-color: $color-muted;
+    border: solid 1px $color-muted;
+}
+.button-muted:hover,
+.button-muted:focus {
+    color: $color-white;
+    background-color: lighten($color-muted, 10%);
+    border-color: lighten($color-muted, 10%);
+}
+
+// Error
+.button-error {
+  color: $color-white;
+  background-color: $color-error;
+  border: none;
+}
+.button-error:hover,
+.button-error:focus {
+  color: $color-white;
+  background-color: lighten($color-error, 10%);
+}
+
+// Warning
+.button-warning {
+  color: $color-white;
+  background-color: $color-warning;
+  border: none;
+}
+.button-warning:hover,
+.button-warning:focus {
+  color: $color-white;
+  background-color: lighten($color-warning, 10%);
+}
+
+// Status
+.button-status {
+  color: $color-white;
+  background-color: $color-status;
+  border: none;
+}
+.button-status:hover,
+.button-status:focus {
+  color: $color-white;
+  background-color: lighten($color-status, 10%);
+}
+
+.button-circle {
+  display: block;
+  position: relative;
+  padding: 0;
+  width: 2rem;
+  height: 2rem;
+  overflow: hidden;
+  border: solid 2px $color-muted;
+  border-radius: 100%;
+  background: transparent;
+  &:before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    margin: 0 !important;
+    color: $color-muted;
+    text-align: center;
+  }
+  &:hover {
+    border-color: $color-link-hover;
+    background: transparent;
+    &:before {
+      color: $color-link-hover;
+    }
+  }
+  > span {
+    @extend .visually-hidden;
+  }
+}

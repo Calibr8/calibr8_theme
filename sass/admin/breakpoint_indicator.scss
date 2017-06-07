@@ -1,0 +1,33 @@
+
+// Breakpoint indicator
+// --------------------------------------------------
+
+#breakpoint-indicator {
+  content: "--";
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-align: center;
+  font-family: "Open Sans", "Segoe UI", "Helvetica", sans-serif;
+  font-size: 12px;
+  color: #fff;   
+  background-color: rgba(#000, 0.8);
+
+  span.pixels {
+    
+  }
+  span.breakpoint {
+    border-left: solid 1px #fff;
+    margin-left: 8px;
+    padding-left: 8px;
+  }
+}
+
+body.breakpoint-ruler {
+  #breakpoint-indicator {
+    bottom: 26px;
+  }
+}

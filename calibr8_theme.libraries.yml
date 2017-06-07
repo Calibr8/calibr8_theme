@@ -1,0 +1,65 @@
+mediamatch:
+  version: 2.0.2
+  js:
+    js/media.match.min.js: {}
+
+normalize:
+  version: 4.1.1
+  css:
+    theme:
+      css/normalize.css: { weight: 90 }
+
+matchheight:
+  version: 0.7.0
+  js:
+    js/jquery.matchHeight.min.js: {}
+
+enquire:
+  version: 2.1.2
+  js:
+    js/enquire.min.js: {}
+
+admin_overrides:
+  version: 1.1
+  css:
+    theme:
+      css/admin/overrides.css: { weight: 91 }
+
+grid_columns:
+  version: 1.x
+  css:
+    theme:
+      css/admin/grid_columns.css: { weight: 90 }
+  js:
+    js/admin/grid_columns.min.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/jquery.once
+    - core/drupalSettings
+
+breakpoint_indicator:
+  version: 1.x
+  css:
+    theme:
+      css/admin/breakpoint_indicator.css: { weight: 90 }
+  js:
+    js/admin/breakpoint_indicator.min.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/jquery.once
+    - core/drupalSettings
+
+headings_indicator:
+  version: 1.x
+  css:
+    theme:
+      css/admin/headings_indicator.css: { weight: 90 }
+  js:
+    js/admin/headings_indicator.min.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/jquery.once
+    - core/drupalSettings

@@ -1,0 +1,27 @@
+
+// Overrides
+// --------------------------------------------------
+
+
+// ADMIN MENU OVERRIDES
+
+// add body padding for toolbar, when open/closed.
+body.adminimal-admin-toolbar.toolbar-horizontal {
+  padding-top: 39px !important;
+  &.toolbar-tray-open {
+    padding-top: 78px !important;
+  }
+}
+
+// Resets to clear the admin of other default styles
+body.adminimal-admin-toolbar .toolbar-bar {
+  ul.menu li, ul li {
+    margin-bottom: 0 !important;
+    a {
+      font-weight: bold;
+    }
+  }
+  ul ul {
+    font-size: 100% !important;
+  }
+}
