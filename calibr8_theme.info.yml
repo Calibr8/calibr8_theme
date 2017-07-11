@@ -1,9 +1,10 @@
 name: Calibr8 Base theme
-description: 'Calibrate powered base theme.'
+description: Calibrate powered base theme.
 type: theme
 package: Calibrate
 base theme: classy
 core: 8.x
+version: '8.x-1.0'
 
 libraries:
   - calibr8_theme/mediamatch
