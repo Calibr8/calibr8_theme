@@ -11,47 +11,32 @@
 #}
 <div id="site-wrapper">
 
-  <header class="region region--header">
-    <div class="container clearfix">
+  <div class="maintenance-message">
+
+    <header class="clearfix">
       <div class="branding">
         <div class="site-logo">
           <img src="{{ logo }}" alt="{{ 'Home'|t }}" />
         </div>
         {% if site_name %}
-        <div class="site-name">{{ site_name }}</div>
+          <div class="site-name">{{ site_name }}</div>
         {% endif %}
         {% if site_slogan %}
-        <div class="site-slogan"><span>{{ site_slogan }}</span></div>
+          <div class="site-slogan"><span>{{ site_slogan }}</span></div>
         {% endif %}
       </div>
-    </div>
-  </header>
+    </header>
 
-  <div class="region region--content-info">
-    <div class="container">
-      {% if page.highlighted %}
-        {{ page.highlighted }}
-      {% endif %}
-      <a id="main-content" tabindex="-1"></a>
-    </div>
+    {% if page.highlighted %}
+      {{ page.highlighted }}
+    {% endif %}
+
+    <a id="main-content" tabindex="-1"></a>
+    {% if title %}
+      <h1>{{ title }}</h1>
+    {% endif %}
+    {{ page.content }}
+
   </div>
-
-  <div class="region region--content">
-    <div class="container">
-      <div class="row">
-        <div class="col col-md-6 col-offset-3" style="text-align: center;">
-          {{ page.content }}
-        </div>
-      </div>
-    </div>
-  </div>
-
-  {% if page.footer %}
-  <footer class="region region--footer">
-    <div class="container">
-      {{ page.footer }}
-    </div>
-  </footer>
-  {% endif %}
 
 </div>
