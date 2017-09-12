@@ -1,0 +1,19 @@
+
+// Maintenance page
+// --------------------------------------------------
+
+.maintenance-message {
+  max-width: 600px;
+  margin: $default-block-margin-bottom auto $default-block-margin-bottom;
+  background: $color-white;
+  border: $default-border;
+  padding: $default-block-margin-bottom $gutter;
+  text-align: center;
+  .branding {
+    float: none;
+    margin-bottom: 2rem;
+  }
+  .site-logo {
+    display: inline-block;
+  }
+}
