@@ -231,10 +231,14 @@ function calibr8_theme_preprocess_field(&$variables) {
 */
 function _calibr8_bookmark_icons($theme) {
 
+  $icons = array();
   $base_url = _calibr8_get_base_url();
   $theme_path = drupal_get_path('theme', $theme);
   $bookmark_icons_path = $theme_path . '/bookmark-icons';
-  $icons = array();
+
+  $files_theme_path = 'public://calibr8-bookmark-icons/' . $theme;
+  file_prepare_directory($files_theme_path, FILE_CREATE_DIRECTORY);
+
 
   // Favicon
 
@@ -275,8 +279,8 @@ function _calibr8_bookmark_icons($theme) {
 
   // Android
 
-  $json = [
-    'name' => 'Hello',
+  $manifest_data = [
+    'name' => '',
     'icons' => [],
     'theme_color' => '',
     'display' => 'standalone',
@@ -302,7 +306,7 @@ function _calibr8_bookmark_icons($theme) {
       // return icon tag
       $icons[] = '<link rel="icon" type="image/png"' . $href . $size . ' >';
       // add to json
-      $json['icons'][] = [
+      $manifest_data['icons'][] = [
         'src' => $base_url . '/' . $bookmark_icons_path . '/' . $file->filename,
         'sizes' => $matches[0],
         'type' => 'image/png'
@@ -311,14 +315,27 @@ function _calibr8_bookmark_icons($theme) {
   }
 
   // Generate JSON file
-  $manifest_path = $bookmark_icons_path . '/manifest.json';
+  $manifest_path = $files_theme_path . '/manifest.json';
+  $manifest_data = json_encode($manifest_data, JSON_UNESCAPED_SLASHES);
+  if(!file_unmanaged_save_data($manifest_data, $manifest_path, FILE_EXISTS_REPLACE)) {
+    drupal_set_message('Unable to create manifest.json for <em>' . $theme . '</em>.', 'error');
+  } else {
+    // add JSON file to theme
+    $href = ' href="' . file_create_url($manifest_path) . '"';
+    $icons[] = '<link rel="manifest"' . $href . ' />';
+  }
+  /*
+  // open or create new file
   if($manifest_file = fopen($manifest_path, "w")) {
     fwrite($manifest_file, json_encode($json, JSON_UNESCAPED_SLASHES));
     fclose($manifest_file);
     // add JSON file to theme
     $href = ' href="' . $base_url . '/' . $manifest_path . '"';
     $icons[] = '<link rel="manifest"' . $href . ' />';
+  } else {
+
   }
+  */
 
   // Windows
 
@@ -331,50 +348,43 @@ function _calibr8_bookmark_icons($theme) {
   }
 
   // Generate XML file
-  $browserconfig_path = $bookmark_icons_path . '/browserconfig.xml';
+  $browserconfig_data = '<?xml version="1.0" encoding="utf-8"?>' . PHP_EOL . '<browserconfig>' . PHP_EOL . '  <msapplication>' . PHP_EOL . '    <tile>' . PHP_EOL;
 
-  if($browserconfig_file = fopen($browserconfig_path, "w")) {
+  if(file_exists($bookmark_icons_path . '/mstile-70x70.png')) {
+    // get src
+    $content = ' src="' . $base_url . '/' . $bookmark_icons_path . '/mstile-70x70.png"';
+    $browserconfig_data .= '       <square70x70logo' . $content . '/>' . PHP_EOL;
+  }
+  if(file_exists($bookmark_icons_path . '/mstile-150x150.png')) {
+    // get src
+    $content = ' src="' . $base_url . '/' . $bookmark_icons_path . '/mstile-150x150.png"';
+    $browserconfig_data .= '       <square150x150logo' . $content . '/>' . PHP_EOL;
+  }
+  if(file_exists($bookmark_icons_path . '/mstile-310x150.png')) {
+    // get src
+    $content = ' src="' . $base_url . '/' . $bookmark_icons_path . '/mstile-310x150.png"';
+    $browserconfig_data .= '       <wide310x150logo' . $content . '/>' . PHP_EOL;
+  }
+  if(file_exists($bookmark_icons_path . '/mstile-310x310.png')) {
+    // get src
+    $content = ' src="' . $base_url . '/' . $bookmark_icons_path . '/mstile-310x310.png"';
+    $browserconfig_data .= '      <square310x310logo' . $content . '/>' . PHP_EOL;
+  }
 
-    // start xml file
-    $xml = '<?xml version="1.0" encoding="utf-8"?>' . PHP_EOL . '<browserconfig>' . PHP_EOL . '  <msapplication>' . PHP_EOL . '    <tile>' . PHP_EOL;
+  if($tile_color = theme_get_setting('windows_tile_color')) {
+    $browserconfig_data .= '      <TileColor>' . $tile_color . '</TileColor>' . PHP_EOL;
+  }
 
-    if(file_exists($bookmark_icons_path . '/mstile-70x70.png')) {
-      // get src
-      $content = ' src="' . $base_url . '/' . $bookmark_icons_path . '/mstile-70x70.png"';
-      $xml .= '       <square70x70logo' . $content . '/>' . PHP_EOL;
-    }
-    if(file_exists($bookmark_icons_path . '/mstile-150x150.png')) {
-      // get src
-      $content = ' src="' . $base_url . '/' . $bookmark_icons_path . '/mstile-150x150.png"';
-      $xml .= '       <square150x150logo' . $content . '/>' . PHP_EOL;
-    }
-    if(file_exists($bookmark_icons_path . '/mstile-310x150.png')) {
-      // get src
-      $content = ' src="' . $base_url . '/' . $bookmark_icons_path . '/mstile-310x150.png"';
-      $xml .= '       <wide310x150logo' . $content . '/>' . PHP_EOL;
-    }
-    if(file_exists($bookmark_icons_path . '/mstile-310x310.png')) {
-      // get src
-      $content = ' src="' . $base_url . '/' . $bookmark_icons_path . '/mstile-310x310.png"';
-      $xml .= '      <square310x310logo' . $content . '/>' . PHP_EOL;
-    }
+  $browserconfig_data .= '    </tile>' . PHP_EOL . '  </msapplication>' . PHP_EOL . '</browserconfig>';
 
-    if($tile_color = theme_get_setting('windows_tile_color')) {
-      $xml .= '      <TileColor>' . $tile_color . '</TileColor>' . PHP_EOL;
-    }
-
-    // end xml file
-    $xml .= '    </tile>' . PHP_EOL . '  </msapplication>' . PHP_EOL . '</browserconfig>';
-    // write xml file
-    fwrite($browserconfig_file, $xml);
-    fclose($browserconfig_file);
-
-    // add xml file to theme
-    $content = ' content="' . $base_url . '/' . $bookmark_icons_path . '/browserconfig.xml"';
-    $icons[] = '<meta name="msapplication-config"' . $content . ' />';
-
+  // write xml file
+  $browserconfig_path = $files_theme_path . '/browserconfig.xml';
+  if(!file_unmanaged_save_data($browserconfig_data, $browserconfig_path, FILE_EXISTS_REPLACE)) {
+    drupal_set_message('Unable to create browserconfig.xml for <em>' . $theme . '</em>.', 'error');
   } else {
-    drupal_set_message('Unable to create browserconfig XML.', 'error');
+    // add xml file to theme
+    $content = ' content="' . file_create_url($browserconfig_path) . '"';
+    $icons[] = '<meta name="msapplication-config"' . $content . ' />';
   }
 
   return $icons;
