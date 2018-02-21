@@ -123,6 +123,16 @@ function calibr8_theme_preprocess_page(&$variables) {
     $variables['content_attributes']['class'][] = 'col-md-8 col-lg-9';
     $variables['sidebar_right_attributes']['class'][] = 'col-md-4 col-lg-3';
   }
+
+  // Cookie compliance
+  $moduleHandler = \Drupal::service('module_handler');
+  if ($moduleHandler->moduleExists('calibr8_cookie_compliance')) {
+    $variables['calibr8_cookiecompliance_placeholder'] = [
+      '#type' => 'markup',
+      '#markup' => '<div id="calibr8-cookie-compliance-placeholder"></div>',
+    ];
+  }
+
 }
 
 /**
