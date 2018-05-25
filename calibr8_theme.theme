@@ -8,6 +8,7 @@ use Drupal\Core\PhpStorage\PhpStorageFactory;
 use Drupal\node\Entity;
 use Drupal\Core\Menu;
 use Drupal\Core\Template\Attribute;
+use \Drupal\Component\Utility\Html;
 
 /**
  * Implements hook_page_attachments_alter()
@@ -162,8 +163,8 @@ function calibr8_theme_preprocess_node(&$variables) {
   // ksm('calibr8_theme_preprocess_node');
   if(isset($variables['content']['#node'])) {
     $node = $variables['content']['#node'];
-    $css_node_type = _calibr8_clean_css_identifier($node->getType());
-    $css_view_mode = _calibr8_clean_css_identifier($variables['content']['#view_mode']);
+    $css_node_type = Html::cleanCssIdentifier($node->getType());
+    $css_view_mode = Html::cleanCssIdentifier($variables['content']['#view_mode']);
 
     // Change modifier classes to use BEM syntax.
     $variables['attributes']['class'] = preg_replace('/^node--type-' . $css_node_type . '$/', 'node--' . $css_node_type, $variables['attributes']['class']);
@@ -182,8 +183,8 @@ function calibr8_theme_preprocess_taxonomy_term(&$variables) {
   // ksm('calibr8_theme_preprocess_taxonomy_term');
   if(isset($variables['content']['#taxonomy_term'])) {
     $term = $variables['content']['#taxonomy_term'];
-    $css_vocabulary_name = _calibr8_clean_css_identifier($term->getVocabularyId());
-    $css_view_mode = _calibr8_clean_css_identifier($variables['content']['#view_mode']);
+    $css_vocabulary_name = Html::cleanCssIdentifier($term->getVocabularyId());
+    $css_view_mode = Html::cleanCssIdentifier($variables['content']['#view_mode']);
 
     // Change modifier classes to use BEM syntax.
     $variables['attributes']['class'] = preg_replace('/^taxonomy-term' . '$/', 'term', $variables['attributes']['class']);
@@ -204,7 +205,7 @@ function calibr8_theme_preprocess_user(&$variables) {
   if(isset($variables['content']['#user'])) {
     $user = $variables['content']['#user'];
     $roles = $user->getRoles();
-    $css_view_mode = _calibr8_clean_css_identifier($variables['content']['#view_mode']);
+    $css_view_mode = Html::cleanCssIdentifier($variables['content']['#view_mode']);
 
     // Remove dull user class
     $index = array_search('user--type-user', $variables['attributes']['class']);
@@ -215,7 +216,7 @@ function calibr8_theme_preprocess_user(&$variables) {
 
     // Add class for each role
     foreach($roles as $role) {
-      $css_role = _calibr8_clean_css_identifier($role);
+      $css_role = Html::cleanCssIdentifier($role);
       $variables['attributes']['class'][] = 'user--' . $css_role;
       // Add modifier classes for view mode.
       $variables['attributes']['class'][] = 'user--' . $css_role . '--' . $css_view_mode;
@@ -230,7 +231,7 @@ function calibr8_theme_preprocess_field(&$variables) {
   // ksm('calibr8_theme_preprocess_field');
 
   $css_field_name = str_replace('field_', '', $variables['field_name']);
-  $css_field_name = _calibr8_clean_css_identifier($css_field_name);
+  $css_field_name = Html::cleanCssIdentifier($css_field_name);
 
   $variables['attributes']['class'] = 'field--' . $css_field_name;
 
@@ -419,27 +420,7 @@ function _calibr8_media_queries($theme) {
   return $media_queries;
 }
 
-/*
- * Helper function from D7 which is missing in D8
- */
-function _calibr8_clean_css_identifier($identifier, $filter = array(' ' => '-', '_' => '-', '__' => '__', '/' => '-', '[' => '-', ']' => '')) {
-  // By default, we filter using Drupal's coding standards.
-  $identifier = strtr($identifier, $filter);
-
-  // Valid characters in a CSS identifier are:
-  // - the hyphen (U+002D)
-  // - a-z (U+0030 - U+0039)
-  // - A-Z (U+0041 - U+005A)
-  // - the underscore (U+005F)
-  // - 0-9 (U+0061 - U+007A)
-  // - ISO 10646 characters U+00A1 and higher
-  // We strip out any character not in the above list.
-  $identifier = preg_replace('/[^\x{002D}\x{0030}-\x{0039}\x{0041}-\x{005A}\x{005F}\x{0061}-\x{007A}\x{00A1}-\x{FFFF}]/u', '', $identifier);
-
-  return $identifier;
-}
-
-/*
+/**
  * Help function to get $base_url
  * base_url is not returning https, so we have to create a workaround
  */
