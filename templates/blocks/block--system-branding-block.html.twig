@@ -19,16 +19,18 @@
   <a href="{{ path('<front>') }}" title="{{ 'Home'|t }}" rel="home">
     <div class="site-logo">
       {% if site_logo_png %}
-        <img src="{{ site_logo }}" onerror="this.src='{{ site_logo_png }}'; this.onerror=null;" alt="{{ 'Home'|t }}" />
+        <img src="{{ site_logo }}"
+             onerror="this.src='{{ site_logo_png }}'; this.onerror=null;"
+             alt="{{ 'Home'|t }}"/>
       {% else %}
-        <img src="{{ site_logo }}" alt="{{ 'Home'|t }}" />
+        <img src="{{ site_logo }}" alt="{{ 'Home'|t }}"/>
       {% endif %}
     </div>
     {% if site_name %}
-    <div class="site-name">{{ site_name }}</div>
+      <div class="site-name">{{ site_name }}</div>
     {% endif %}
     {% if site_slogan %}
-    <div class="site-slogan"><span>{{ site_slogan }}</span></div>
+      <div class="site-slogan"><span>{{ site_slogan }}</span></div>
     {% endif %}
   </a>
 </div>

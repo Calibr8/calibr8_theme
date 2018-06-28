@@ -25,28 +25,29 @@
 #}
 <!DOCTYPE html>
 <html{{ html_attributes }}>
-  <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <head-placeholder token="{{ placeholder_token|raw }}">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <head-placeholder token="{{ placeholder_token|raw }}">
     <title>{{ head_title|safe_join(' | ') }}</title>
     {{ gtm_datalayer }}
     {{ gtm_head }}
     <css-placeholder token="{{ placeholder_token|raw }}">
-    <!--[if lt IE 9]>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
-    <![endif]-->
-    <js-placeholder token="{{ placeholder_token|raw }}">
-    {% if bookmark_icons %}
-      {% for icon in bookmark_icons %}
-          {{ icon|raw }}
-      {% endfor %}
-    {% endif %}
-  </head>
-  <body{{ attributes.addClass(body_classes) }}>
-    {{ gtm_body }}
-    {{ page_top }}
-    {{ page }}
-    {{ page_bottom }}
-    <js-bottom-placeholder token="{{ placeholder_token|raw }}">
-  </body>
+      <!--[if lt IE 9]>
+      <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+      <![endif]-->
+      <js-placeholder token="{{ placeholder_token|raw }}">
+        {% if bookmark_icons %}
+          {% for icon in bookmark_icons %}
+            {{ icon|raw }}
+          {% endfor %}
+        {% endif %}
+        </head>
+<body{{ attributes.addClass(body_classes) }}>
+{{ gtm_body }}
+{{ page_top }}
+{{ page }}
+{{ page_bottom }}
+<js-bottom-placeholder token="{{ placeholder_token|raw }}">
+</body>
 </html>

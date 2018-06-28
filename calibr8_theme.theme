@@ -12,10 +12,10 @@ use \Drupal\Component\Utility\Html;
  */
 function calibr8_theme_page_attachments_alter(&$page) {
   // Remove core favicon, to replace later with our bookmark icons
-  if(isset($page['#attached']['html_head_link'])) {
-    foreach($page['#attached']['html_head_link'] as $index => $head_link) {
+  if (isset($page['#attached']['html_head_link'])) {
+    foreach ($page['#attached']['html_head_link'] as $index => $head_link) {
       $head_link = reset($head_link);
-      if(isset($head_link['rel']) && $head_link['rel'] == 'shortcut icon') {
+      if (isset($head_link['rel']) && $head_link['rel'] == 'shortcut icon') {
         unset($page['#attached']['html_head_link'][$index]);
       }
     }
@@ -23,8 +23,8 @@ function calibr8_theme_page_attachments_alter(&$page) {
 }
 
 /**
-* Implements hook_preprocess_html().
-*/
+ * Implements hook_preprocess_html().
+ */
 function calibr8_theme_preprocess_html(&$variables) {
 
   // Add class to front page.
@@ -46,13 +46,13 @@ function calibr8_theme_preprocess_html(&$variables) {
     $variables['#attached']['library'][] = 'calibr8_admintheme/admin_menu';
   }
   elseif (!$auth) {
-   $variables['attributes']['class'][] = 'not-logged-in';
+    $variables['attributes']['class'][] = 'not-logged-in';
   }
 
   // Add classes to 404 & 403 pages.
   try {
     $request = \Drupal::request()->attributes->get('exception');
-    } catch (Exception $e) { /* .. Do nothing .. */
+  } catch (Exception $e) { /* .. Do nothing .. */
   }
   if (isset($request)) {
     switch ($request->getStatusCode()) {
@@ -66,14 +66,18 @@ function calibr8_theme_preprocess_html(&$variables) {
   }
 
   // Check for sidebars
-  if(isset($variables['page']['sidebar_left']) && isset($variables['page']['sidebar_right'])) {
+  if (isset($variables['page']['sidebar_left']) && isset($variables['page']['sidebar_right'])) {
     $variables['attributes']['class'][] = 'both-sidebars';
   }
-  else if(isset($variables['page']['sidebar_left'])) {
-    $variables['attributes']['class'][] = 'sidebar-left';
-  }
-  else if(isset($variables['page']['sidebar_right'])) {
-    $variables['attributes']['class'][] = 'sidebar-right';
+  else {
+    if (isset($variables['page']['sidebar_left'])) {
+      $variables['attributes']['class'][] = 'sidebar-left';
+    }
+    else {
+      if (isset($variables['page']['sidebar_right'])) {
+        $variables['attributes']['class'][] = 'sidebar-right';
+      }
+    }
   }
 
   // Development functionalities.
@@ -99,27 +103,31 @@ function calibr8_theme_preprocess_html(&$variables) {
 }
 
 /**
-* Implements hook_preprocess_html().
-*/
+ * Implements hook_preprocess_html().
+ */
 function calibr8_theme_preprocess_page(&$variables) {
 
   // Create layout
-  $variables['content_attributes'] = new Attribute(array('class' => array('col')));
-  $variables['sidebar_left_attributes'] = new Attribute(array('class' => array('col')));
-  $variables['sidebar_right_attributes'] = new Attribute(array('class' => array('col')));
-  if(isset($variables['page']['sidebar_left']) && !empty($variables['page']['sidebar_left'])
+  $variables['content_attributes'] = new Attribute(['class' => ['col']]);
+  $variables['sidebar_left_attributes'] = new Attribute(['class' => ['col']]);
+  $variables['sidebar_right_attributes'] = new Attribute(['class' => ['col']]);
+  if (isset($variables['page']['sidebar_left']) && !empty($variables['page']['sidebar_left'])
     && isset($variables['page']['sidebar_right']) && !empty($variables['page']['sidebar_right'])) {
     $variables['content_attributes']['class'][] = 'col-md-8 col-lg-6 col-lg-push-3';
     $variables['sidebar_left_attributes']['class'][] = 'col-md-4 col-lg-3 col-lg-pull-6';
     $variables['sidebar_right_attributes']['class'][] = 'col-md-4 col-lg-3';
   }
-  else if(isset($variables['page']['sidebar_left']) && !empty($variables['page']['sidebar_left'])) {
-    $variables['content_attributes']['class'][] = 'col-md-8 col-md-push-4 col-lg-9 col-lg-push-3';
-    $variables['sidebar_left_attributes']['class'][] = 'col-md-4 col-md-pull-8 col-lg-3 col-lg-pull-9';
-  }
-  else if(isset($variables['page']['sidebar_right']) && !empty($variables['page']['sidebar_right'])) {
-    $variables['content_attributes']['class'][] = 'col-md-8 col-lg-9';
-    $variables['sidebar_right_attributes']['class'][] = 'col-md-4 col-lg-3';
+  else {
+    if (isset($variables['page']['sidebar_left']) && !empty($variables['page']['sidebar_left'])) {
+      $variables['content_attributes']['class'][] = 'col-md-8 col-md-push-4 col-lg-9 col-lg-push-3';
+      $variables['sidebar_left_attributes']['class'][] = 'col-md-4 col-md-pull-8 col-lg-3 col-lg-pull-9';
+    }
+    else {
+      if (isset($variables['page']['sidebar_right']) && !empty($variables['page']['sidebar_right'])) {
+        $variables['content_attributes']['class'][] = 'col-md-8 col-lg-9';
+        $variables['sidebar_right_attributes']['class'][] = 'col-md-4 col-lg-3';
+      }
+    }
   }
 
   // Cookie compliance
@@ -134,13 +142,13 @@ function calibr8_theme_preprocess_page(&$variables) {
 }
 
 /**
-* Implements hook_preprocess_block().
-*/
+ * Implements hook_preprocess_block().
+ */
 function calibr8_theme_preprocess_block(&$variables) {
-  switch($variables['base_plugin_id']) {
+  switch ($variables['base_plugin_id']) {
     case 'system_branding_block':
       $logo_png = str_replace('svg', 'png', $variables['site_logo']);
-      if(file_exists(ltrim($logo_png, '/'))) {
+      if (file_exists(ltrim($logo_png, '/'))) {
         $variables['site_logo_png'] = $logo_png;
       }
     case 'system_menu_block':
@@ -153,12 +161,12 @@ function calibr8_theme_preprocess_block(&$variables) {
 }
 
 /**
-* Implements hook_preprocess_node().
-* When using display suite this is called from calibr8_ds.module
-*/
+ * Implements hook_preprocess_node().
+ * When using display suite this is called from calibr8_ds.module
+ */
 function calibr8_theme_preprocess_node(&$variables) {
   // ksm('calibr8_theme_preprocess_node');
-  if(isset($variables['content']['#node'])) {
+  if (isset($variables['content']['#node'])) {
     $node = $variables['content']['#node'];
     $css_node_type = Html::cleanCssIdentifier($node->getType());
     $css_view_mode = Html::cleanCssIdentifier($variables['content']['#view_mode']);
@@ -173,12 +181,12 @@ function calibr8_theme_preprocess_node(&$variables) {
 }
 
 /**
-* Implements hook_preprocess_taxonomy_term().
-* When using display suite this is called from calibr8_ds.module
-*/
+ * Implements hook_preprocess_taxonomy_term().
+ * When using display suite this is called from calibr8_ds.module
+ */
 function calibr8_theme_preprocess_taxonomy_term(&$variables) {
   // ksm('calibr8_theme_preprocess_taxonomy_term');
-  if(isset($variables['content']['#taxonomy_term'])) {
+  if (isset($variables['content']['#taxonomy_term'])) {
     $term = $variables['content']['#taxonomy_term'];
     $css_vocabulary_name = Html::cleanCssIdentifier($term->getVocabularyId());
     $css_view_mode = Html::cleanCssIdentifier($variables['content']['#view_mode']);
@@ -194,25 +202,27 @@ function calibr8_theme_preprocess_taxonomy_term(&$variables) {
 }
 
 /**
-* Implements hook_preprocess_user().
-* When using display suite this is called from calibr8_ds.module
-*/
+ * Implements hook_preprocess_user().
+ * When using display suite this is called from calibr8_ds.module
+ */
 function calibr8_theme_preprocess_user(&$variables) {
   // ksm('calibr8_theme_preprocess_user');
-  if(isset($variables['content']['#user'])) {
+  if (isset($variables['content']['#user'])) {
     $user = $variables['content']['#user'];
     $roles = $user->getRoles();
     $css_view_mode = Html::cleanCssIdentifier($variables['content']['#view_mode']);
 
     // Remove dull user class
     $index = array_search('user--type-user', $variables['attributes']['class']);
-    if($index !== FALSE) { unset($variables['attributes']['class'][$index]); }
+    if ($index !== FALSE) {
+      unset($variables['attributes']['class'][$index]);
+    }
 
     // Change modifier classes to use BEM syntax.
     $variables['attributes']['class'] = preg_replace('/^user--view-mode-' . $css_view_mode . '$/', 'user--' . $css_view_mode, $variables['attributes']['class']);
 
     // Add class for each role
-    foreach($roles as $role) {
+    foreach ($roles as $role) {
       $css_role = Html::cleanCssIdentifier($role);
       $variables['attributes']['class'][] = 'user--' . $css_role;
       // Add modifier classes for view mode.
@@ -222,8 +232,8 @@ function calibr8_theme_preprocess_user(&$variables) {
 }
 
 /**
-* Implements hook_preprocess_field().
-*/
+ * Implements hook_preprocess_field().
+ */
 function calibr8_theme_preprocess_field(&$variables) {
   // ksm('calibr8_theme_preprocess_field');
 
@@ -235,11 +245,11 @@ function calibr8_theme_preprocess_field(&$variables) {
 }
 
 /**
-* Helper function to add the apple touch icons to the site.
-*/
+ * Helper function to add the apple touch icons to the site.
+ */
 function _calibr8_bookmark_icons($theme) {
 
-  $icons = array();
+  $icons = [];
   $base_url = _calibr8_get_base_url();
   $theme_path = drupal_get_path('theme', $theme);
   $bookmark_icons_path = $theme_path . '/bookmark-icons';
@@ -250,7 +260,7 @@ function _calibr8_bookmark_icons($theme) {
 
   // Favicon
 
-  if(file_exists($bookmark_icons_path . '/favicon.ico')) {
+  if (file_exists($bookmark_icons_path . '/favicon.ico')) {
     $href = ' href="' . $base_url . '/' . $bookmark_icons_path . '/favicon.ico"';
     $icons[] = '<link rel="shortcut icon"' . $href . '>';
   }
@@ -258,13 +268,13 @@ function _calibr8_bookmark_icons($theme) {
   // Favicons (png)
 
   $mask = '/^favicon(-([0-9]+x[0-9]+)).png$/';
-  if ($files = file_scan_directory($bookmark_icons_path, $mask, array('recurse' => FALSE))) {
+  if ($files = file_scan_directory($bookmark_icons_path, $mask, ['recurse' => FALSE])) {
     foreach ($files as $file) {
       // get href
       $href = ' href="' . $base_url . '/' . $bookmark_icons_path . '/' . $file->filename . '"';
       // get size
       preg_match('/([0-9]{2,}[x][0-9]{2,})/', $file->filename, $matches);
-      $size =  $matches ? ' sizes="' . $matches[0] . '"' : '';
+      $size = $matches ? ' sizes="' . $matches[0] . '"' : '';
       // return icon tag
       $icons[] = '<link rel="icon" type="image/png"' . $href . $size . ' >';
     }
@@ -273,13 +283,13 @@ function _calibr8_bookmark_icons($theme) {
   // Apple
 
   $mask = '/^apple-touch-icon(-([0-9]+x[0-9]+)).png$/';
-  if ($files = file_scan_directory($bookmark_icons_path, $mask, array('recurse' => FALSE))) {
+  if ($files = file_scan_directory($bookmark_icons_path, $mask, ['recurse' => FALSE])) {
     foreach ($files as $file) {
       // get href
       $href = ' href="' . $base_url . '/' . $bookmark_icons_path . '/' . $file->filename . '"';
       // get size
       preg_match('/([0-9]{2,}[x][0-9]{2,})/', $file->filename, $matches);
-      $size =  $matches ? ' sizes="' . $matches[0] . '"' : '';
+      $size = $matches ? ' sizes="' . $matches[0] . '"' : '';
       // return icon tag
       $icons[] = '<link rel="apple-touch-icon"' . $href . $size . ' >';
     }
@@ -294,30 +304,30 @@ function _calibr8_bookmark_icons($theme) {
     'display' => 'standalone',
   ];
 
-  if($site_name = \Drupal::config('system.site')->get('name')) {
+  if ($site_name = \Drupal::config('system.site')->get('name')) {
     $json['name'] = $site_name;
   }
 
-  if($theme_color = theme_get_setting('android_theme_color')) {
+  if ($theme_color = theme_get_setting('android_theme_color')) {
     $icons[] = '<meta name="theme-color" content="' . $theme_color . '">';
     $json['theme_color'] = $theme_color;
   }
 
   $mask = '/^android-chrome(-([0-9]+x[0-9]+)).png$/';
-  if ($files = file_scan_directory($bookmark_icons_path, $mask, array('recurse' => FALSE))) {
+  if ($files = file_scan_directory($bookmark_icons_path, $mask, ['recurse' => FALSE])) {
     foreach ($files as $file) {
       // get href
       $href = ' href="' . $base_url . '/' . $bookmark_icons_path . '/' . $file->filename . '"';
       // get size
       preg_match('/([0-9]{2,}[x][0-9]{2,})/', $file->filename, $matches);
-      $size =  $matches ? ' sizes="' . $matches[0] . '"' : '';
+      $size = $matches ? ' sizes="' . $matches[0] . '"' : '';
       // return icon tag
       $icons[] = '<link rel="icon" type="image/png"' . $href . $size . ' >';
       // add to json
       $manifest_data['icons'][] = [
         'src' => $base_url . '/' . $bookmark_icons_path . '/' . $file->filename,
         'sizes' => $matches[0],
-        'type' => 'image/png'
+        'type' => 'image/png',
       ];
     }
   }
@@ -325,9 +335,10 @@ function _calibr8_bookmark_icons($theme) {
   // Generate JSON file
   $manifest_path = $files_theme_path . '/manifest.json';
   $manifest_data = json_encode($manifest_data, JSON_UNESCAPED_SLASHES);
-  if(!file_unmanaged_save_data($manifest_data, $manifest_path, FILE_EXISTS_REPLACE)) {
+  if (!file_unmanaged_save_data($manifest_data, $manifest_path, FILE_EXISTS_REPLACE)) {
     drupal_set_message('Unable to create manifest.json for <em>' . $theme . '</em>.', 'error');
-  } else {
+  }
+  else {
     // add JSON file to theme
     $href = ' href="' . file_create_url($manifest_path) . '"';
     $icons[] = '<link rel="manifest"' . $href . ' />';
@@ -347,10 +358,10 @@ function _calibr8_bookmark_icons($theme) {
 
   // Windows
 
-  if($tile_color = theme_get_setting('windows_tile_color')) {
+  if ($tile_color = theme_get_setting('windows_tile_color')) {
     $icons[] = '<meta name="msapplication-TileColor" content="' . $tile_color . '">';
   }
-  if(file_exists($bookmark_icons_path . '/mstile-144x144.png')) {
+  if (file_exists($bookmark_icons_path . '/mstile-144x144.png')) {
     $content = ' content="' . $base_url . '/' . $bookmark_icons_path . '/mstile-144x144.png"';
     $icons[] = '<meta name="msapplication-TileImage"' . $content . '>';
   }
@@ -358,28 +369,28 @@ function _calibr8_bookmark_icons($theme) {
   // Generate XML file
   $browserconfig_data = '<?xml version="1.0" encoding="utf-8"?>' . PHP_EOL . '<browserconfig>' . PHP_EOL . '  <msapplication>' . PHP_EOL . '    <tile>' . PHP_EOL;
 
-  if(file_exists($bookmark_icons_path . '/mstile-70x70.png')) {
+  if (file_exists($bookmark_icons_path . '/mstile-70x70.png')) {
     // get src
     $content = ' src="' . $base_url . '/' . $bookmark_icons_path . '/mstile-70x70.png"';
     $browserconfig_data .= '       <square70x70logo' . $content . '/>' . PHP_EOL;
   }
-  if(file_exists($bookmark_icons_path . '/mstile-150x150.png')) {
+  if (file_exists($bookmark_icons_path . '/mstile-150x150.png')) {
     // get src
     $content = ' src="' . $base_url . '/' . $bookmark_icons_path . '/mstile-150x150.png"';
     $browserconfig_data .= '       <square150x150logo' . $content . '/>' . PHP_EOL;
   }
-  if(file_exists($bookmark_icons_path . '/mstile-310x150.png')) {
+  if (file_exists($bookmark_icons_path . '/mstile-310x150.png')) {
     // get src
     $content = ' src="' . $base_url . '/' . $bookmark_icons_path . '/mstile-310x150.png"';
     $browserconfig_data .= '       <wide310x150logo' . $content . '/>' . PHP_EOL;
   }
-  if(file_exists($bookmark_icons_path . '/mstile-310x310.png')) {
+  if (file_exists($bookmark_icons_path . '/mstile-310x310.png')) {
     // get src
     $content = ' src="' . $base_url . '/' . $bookmark_icons_path . '/mstile-310x310.png"';
     $browserconfig_data .= '      <square310x310logo' . $content . '/>' . PHP_EOL;
   }
 
-  if($tile_color = theme_get_setting('windows_tile_color')) {
+  if ($tile_color = theme_get_setting('windows_tile_color')) {
     $browserconfig_data .= '      <TileColor>' . $tile_color . '</TileColor>' . PHP_EOL;
   }
 
@@ -387,9 +398,10 @@ function _calibr8_bookmark_icons($theme) {
 
   // write xml file
   $browserconfig_path = $files_theme_path . '/browserconfig.xml';
-  if(!file_unmanaged_save_data($browserconfig_data, $browserconfig_path, FILE_EXISTS_REPLACE)) {
+  if (!file_unmanaged_save_data($browserconfig_data, $browserconfig_path, FILE_EXISTS_REPLACE)) {
     drupal_set_message('Unable to create browserconfig.xml for <em>' . $theme . '</em>.', 'error');
-  } else {
+  }
+  else {
     // add xml file to theme
     $content = ' content="' . file_create_url($browserconfig_path) . '"';
     $icons[] = '<meta name="msapplication-config"' . $content . ' />';
@@ -408,7 +420,7 @@ function _calibr8_media_queries($theme) {
   $breakpoints = $breakpointManager->getBreakpointsByGroup($theme);
 
   // Attach the breakpoints to drupalSettings
-  $media_queries = array();
+  $media_queries = [];
   foreach ($breakpoints as $id => $breakpoint) {
     $key = explode('.', $id)[1];
     $media_queries[$key] = $breakpoint->getMediaQuery();

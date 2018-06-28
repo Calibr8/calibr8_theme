@@ -1,4 +1,3 @@
-
 // Mixins
 // --------------------------------------------------
 
@@ -13,7 +12,6 @@
     visibility: hidden;
   }
 }
-
 // Unit conversion
 // --------------------------------------------------
 
@@ -23,7 +21,6 @@
 @function strip-unit($num) {
   @return $num / ($num * 0 + 1);
 }
-
 // PIXELS TO REM
 // Convert a pixels value to rems.
 
@@ -33,7 +30,6 @@
   }
   @return strip-unit($num) / 16;
 }
-
 // REM TO PIXELS
 // Convert a rems value to pixels.
 
@@ -43,7 +39,6 @@
   }
   @return strip-unit($num) * 16;
 }
-
 // Fonts
 // --------------------------------------------------
 
@@ -60,15 +55,14 @@
     font-family: $name;
     src: url('#{$font-path}#{$filename}.eot');
     src: url('#{$font-path}#{$filename}.eot?#iefix') format('embedded-opentype'),
-         // url('#{$font-path}#{$filename}.woff2') format('woff2'),
-         url('#{$font-path}#{$filename}.woff') format('woff'),
-         url('#{$font-path}#{$filename}.ttf') format('truetype'),
-         url('#{$font-path}#{$filename}.svg##{$filename}') format('svg');
+      // url('#{$font-path}#{$filename}.woff2') format('woff2'),
+    url('#{$font-path}#{$filename}.woff') format('woff'),
+    url('#{$font-path}#{$filename}.ttf') format('truetype'),
+    url('#{$font-path}#{$filename}.svg##{$filename}') format('svg');
     font-weight: $font-weight;
     font-style: $font-style;
   }
 }
-
 // FONT SIZE
 // Converts a points value to rems and adds a default
 // line-height bases on $line-height-factor.
@@ -89,7 +83,7 @@
   @if $max > 1 and type-of(nth($values, 2)) == number {
     $line-height: nth($values, 2);
   }
-  // Else calculate line-height using $font-size
+    // Else calculate line-height using $font-size
   @else if $line-height == false {
     $line-height: $font-size * $line-height-factor;
   }
@@ -100,21 +94,19 @@
       @if $line-height != 0 {
         line-height: $line-height / 16 + rem !important;
       }
-    }
-    @else {
+    } @else {
       font-size: $font-size / 16 + rem;
       @if $line-height != 0 {
         line-height: $line-height / 16 + rem;
       }
     }
   }
-  // Else output default values
+    // Else output default values
   @else {
     font-size: $font-size / 16 + rem;
     line-height: $line-height / 16 + rem;
   }
 }
-
 // FONT SMOOTHING
 // Better text rendering for modern browsers.
 
@@ -122,13 +114,11 @@
   @if $value == antialiased {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
-  @else {
+  } @else {
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
   }
 }
-
 // Breakpoints and Media Queries
 // --------------------------------------------------
 
@@ -142,7 +132,6 @@
   $num: str-slice($mq, $num-start, $num-end);
   @return unquote($num);
 }
-
 // BREAKPOINT
 // Creates a media query.
 // - $point:    sm, md, lg, xl
@@ -152,62 +141,74 @@
 
   @if $point == retina {
     @media only screen and (-webkit-min-device-pixel-ratio: 2),
-           only screen and (min--moz-device-pixel-ratio: 2),
-           only screen and (min-device-pixel-ratio: 2) { @content; }
-  }
-  @else {
+    only screen and (min--moz-device-pixel-ratio: 2),
+    only screen and (min-device-pixel-ratio: 2) {
+      @content;
+    }
+  } @else {
 
     @if $limiter == min {
       @if $point == sm {
-        @media only screen and (min-width: $sm-width) { @content; }
-      }
-      @else if $point == md {
-        @media only screen and (min-width: $md-width) { @content; }
-      }
-      @else if $point == lg {
-        @media only screen and (min-width: $lg-width) { @content; }
-      }
-      @else if $point == xl {
-        @media only screen and (min-width: $xl-width) { @content; }
+        @media only screen and (min-width: $sm-width) {
+          @content;
+        }
+      } @else if $point == md {
+        @media only screen and (min-width: $md-width) {
+          @content;
+        }
+      } @else if $point == lg {
+        @media only screen and (min-width: $lg-width) {
+          @content;
+        }
+      } @else if $point == xl {
+        @media only screen and (min-width: $xl-width) {
+          @content;
+        }
       }
     }
 
     @if $limiter == max {
       @if $point == sm {
-        @media only screen and (max-width: (unquote($md-width) - 0.01)) { @content; }
-      }
-      @else if $point == md {
-        @media only screen and (max-width: (unquote($lg-width) - 0.01) + 'px') { @content; }
-      }
-      @else if $point == lg {
-        @media only screen and (max-width: (unquote($xl-width) - 0.01) + 'px') { @content; }
-      }
-      @else if $point == xl {
+        @media only screen and (max-width: (unquote($md-width) - 0.01)) {
+          @content;
+        }
+      } @else if $point == md {
+        @media only screen and (max-width: (unquote($lg-width) - 0.01) + 'px') {
+          @content;
+        }
+      } @else if $point == lg {
+        @media only screen and (max-width: (unquote($xl-width) - 0.01) + 'px') {
+          @content;
+        }
+      } @else if $point == xl {
         @content;
       }
     }
 
     @if $limiter == only {
       @if $point == sm {
-        @media only screen and (min-width: $sm-width) and (max-width: (unquote($md-width) - 0.01) + 'px') { @content; }
-      }
-      @else if $point == md {
-        @media only screen and (min-width: $md-width) and (max-width: (unquote($lg-width) - 0.01) + 'px') { @content; }
-      }
-      @else if $point == lg {
-        @media only screen and (min-width: $lg-width) and (max-width: (unquote($xl-width) - 0.01) + 'px') { @content; }
-      }
-      @else if $point == xl {
-        @media only screen and (min-width: $xl-width) { @content; }
-      }
-      @else {
+        @media only screen and (min-width: $sm-width) and (max-width: (unquote($md-width) - 0.01) + 'px') {
+          @content;
+        }
+      } @else if $point == md {
+        @media only screen and (min-width: $md-width) and (max-width: (unquote($lg-width) - 0.01) + 'px') {
+          @content;
+        }
+      } @else if $point == lg {
+        @media only screen and (min-width: $lg-width) and (max-width: (unquote($xl-width) - 0.01) + 'px') {
+          @content;
+        }
+      } @else if $point == xl {
+        @media only screen and (min-width: $xl-width) {
+          @content;
+        }
+      } @else {
         @content;
       }
     }
 
   }
 }
-
 // Grid
 // --------------------------------------------------
 
@@ -221,7 +222,6 @@
   padding-right: $gutter;
   max-width: $max-site-width;
 }
-
 // ROW
 // Include CSS for grid row.
 
@@ -230,7 +230,6 @@
   margin-left: -$gutter/2;
   margin-right: -$gutter/2;
 }
-
 // COLUMN
 // Include CSS for grid column.
 
@@ -241,7 +240,6 @@
   padding-right: $gutter/2;
   width: 100%;
 }
-
 // COLUMNS
 // Assign a specified width (number of columns)
 // to a previous defined column.
@@ -255,14 +253,12 @@
     width: 100%;
   }
 }
-
 // COLUMNS WIDTH
 // Return the width (percentage) of certain amount of columns
 
 @function cols-width($cols) {
   @return percentage($cols / $grid-columns);
 }
-
 // COLUMNS OFFSET
 // Assign a specified offset (number of columns)
 // to a previous defined column.
@@ -274,7 +270,6 @@
     margin-left: 100% / ($grid-columns/$cols);
   }
 }
-
 // COLUMNS PUSH
 // Assign a specified push (number of columns)
 // to a previous defined column.
@@ -286,7 +281,6 @@
     left: 100% / ($grid-columns/$cols);
   }
 }
-
 // COLUMNS PULL
 // Assign a specified push (number of columns)
 // to a previous defined column.
@@ -298,7 +292,6 @@
     right: 100% / ($grid-columns/$cols);
   }
 }
-
 // Compatibility
 // --------------------------------------------------
 
@@ -310,7 +303,6 @@
   -webkit-appearance: $style;
   appearance: $style;
 }
-
 // LINEAR GRADIENT
 // Creates a linear gradient with color fallback.
 // Example: @include linear-gradient(left, rgba($color-black, 1) 0%, rgba($color-white, 1) 100%);
@@ -320,7 +312,6 @@
   background: -webkit-linear-gradient(legacy-direction($direction), $color-stops);
   background: linear-gradient($direction, $color-stops);
 }
-
 // Icons
 // --------------------------------------------------
 
@@ -349,14 +340,13 @@
     @content;
   }
   @if $breakpoint {
-    @include breakpoint($breakpoint){
+    @include breakpoint($breakpoint) {
       &:#{$position} {
         @include font-size($default-font-size, 0);
       }
     }
   }
 }
-
 // HIDE ICON TEXT
 // Hide the text for element containing the icon.
 // - $font-size: font size for the icon

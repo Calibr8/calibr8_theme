@@ -18,18 +18,18 @@ function calibr8_theme_form_system_theme_settings_alter(&$form, FormStateInterfa
 
   // Vertical tabs
 
-  $form['calibr8_theme'] = array(
+  $form['calibr8_theme'] = [
     '#type' => 'vertical_tabs',
     '#prefix' => '<h2><small>' . t('Calibr8 Settings') . '</small></h2>',
     '#weight' => -10,
-  );
+  ];
 
   // Visual aids group
-  $form['visual_aids'] = array(
+  $form['visual_aids'] = [
     '#type' => 'details',
-    '#title' =>  ('Visual Aids'),
+    '#title' => ('Visual Aids'),
     '#group' => 'calibr8_theme',
-  );
+  ];
 
   // Introduction
   $intro_text = 'Make sure these settings are turned off on production environments.';
@@ -39,33 +39,33 @@ function calibr8_theme_form_system_theme_settings_alter(&$form, FormStateInterfa
   ];
 
   // Grid columns
-  $form['visual_aids']['grid_columns'] = array(
+  $form['visual_aids']['grid_columns'] = [
     '#type' => 'checkbox',
     '#title' => t('Grid columns'),
     '#default_value' => theme_get_setting('grid_columns'),
-    '#description' => t("Press \"G\" to toggle. This shows the CSS grid on top of the page. This can be useful when aligning content to the grid.")
-  );
+    '#description' => t("Press \"G\" to toggle. This shows the CSS grid on top of the page. This can be useful when aligning content to the grid."),
+  ];
   // Breakpoint indicator
-  $form['visual_aids']['breakpoint_indicator'] = array(
+  $form['visual_aids']['breakpoint_indicator'] = [
     '#type' => 'checkbox',
     '#title' => t('Breakpoint indicator'),
     '#default_value' => theme_get_setting('breakpoint_indicator'),
-    '#description' => t("Adds a small box at the bottom of the browser window that displays the current breakpoint. This can be very useful when writing media queries for a responsive website.")
-  );
+    '#description' => t("Adds a small box at the bottom of the browser window that displays the current breakpoint. This can be very useful when writing media queries for a responsive website."),
+  ];
   // Headings indicator
-  $form['visual_aids']['headings_indicator'] = array(
+  $form['visual_aids']['headings_indicator'] = [
     '#type' => 'checkbox',
     '#title' => t('Headings indicator'),
     '#default_value' => theme_get_setting('headings_indicator'),
-    '#description' => t("Press \"H\" to toggle. Shows the hierarchy of your headers.")
-  );
+    '#description' => t("Press \"H\" to toggle. Shows the hierarchy of your headers."),
+  ];
 
   // Bookmark icons group
-  $form['bookmark_icons'] = array(
+  $form['bookmark_icons'] = [
     '#type' => 'details',
-    '#title' =>  ('Bookmark icons'),
+    '#title' => ('Bookmark icons'),
     '#group' => 'calibr8_theme',
-  );
+  ];
 
   // Intro
   $test_url = 'http://realfavicongenerator.net/favicon_checker?protocol=http&site=' . $_SERVER['HTTP_HOST'];
@@ -80,14 +80,14 @@ function calibr8_theme_form_system_theme_settings_alter(&$form, FormStateInterfa
     '#type' => 'textfield',
     '#title' => t('Windows tile color'),
     '#default_value' => theme_get_setting('windows_tile_color'),
-    '#description' => t("The background of the windows tile. RGB value; for example <em>#85c441</em>.")
+    '#description' => t("The background of the windows tile. RGB value; for example <em>#85c441</em>."),
   ];
   // Android theme color
   $form['bookmark_icons']['android_theme_color'] = [
     '#type' => 'textfield',
     '#title' => t('Android theme color'),
     '#default_value' => theme_get_setting('android_theme_color'),
-    '#description' => t("Starting with Android Lollipop, you can customize the color of the task bar in the switcher. RGB value; for example <em>#85c441</em>.")
+    '#description' => t("Starting with Android Lollipop, you can customize the color of the task bar in the switcher. RGB value; for example <em>#85c441</em>."),
   ];
 
 }

@@ -1,119 +1,152 @@
-
 // Grid
 //--------------------------
 
 .container {
   @include container();
 }
-
 .row {
   @include row();
 }
-
 .col, *[class^="col-"] {
   @include col();
 }
-
 // col classes
 
-@for $i from 1 through $grid-columns { 
-  .col-#{$i} { @include cols($i); }
-} 
+@for $i from 1 through $grid-columns {
+  .col-#{$i} {
+    @include cols($i);
+  }
+}
 @include bp(sm) {
-  @for $i from 1 through $grid-columns { 
-    .col-sm-#{$i} { @include cols($i); }
-  } 
+  @for $i from 1 through $grid-columns {
+    .col-sm-#{$i} {
+      @include cols($i);
+    }
+  }
 }
 @include bp(md) {
-  @for $i from 1 through $grid-columns { 
-    .col-md-#{$i} { @include cols($i); }
-  } 
+  @for $i from 1 through $grid-columns {
+    .col-md-#{$i} {
+      @include cols($i);
+    }
+  }
 }
 @include bp(lg) {
-  @for $i from 1 through $grid-columns { 
-    .col-lg-#{$i} { @include cols($i); }
-  } 
+  @for $i from 1 through $grid-columns {
+    .col-lg-#{$i} {
+      @include cols($i);
+    }
+  }
 }
 @include bp(xl) {
-  @for $i from 1 through $grid-columns { 
-    .col-xl-#{$i} { @include cols($i); }
-  } 
+  @for $i from 1 through $grid-columns {
+    .col-xl-#{$i} {
+      @include cols($i);
+    }
+  }
 }
-
 // offset classes
 
-@for $i from 1 through $grid-columns { 
-  .col-offset-#{$i} { @include cols-offset($i); }
-} 
+@for $i from 1 through $grid-columns {
+  .col-offset-#{$i} {
+    @include cols-offset($i);
+  }
+}
 @include bp(sm) {
-  @for $i from 1 through $grid-columns { 
-    .col-sm-offset-#{$i} { @include cols-offset($i); }
-  } 
+  @for $i from 1 through $grid-columns {
+    .col-sm-offset-#{$i} {
+      @include cols-offset($i);
+    }
+  }
 }
 @include bp(md) {
-  @for $i from 1 through $grid-columns { 
-    .col-md-offset-#{$i} { @include cols-offset($i); }
-  } 
+  @for $i from 1 through $grid-columns {
+    .col-md-offset-#{$i} {
+      @include cols-offset($i);
+    }
+  }
 }
 @include bp(lg) {
-  @for $i from 1 through $grid-columns { 
-    .col-lg-offset-#{$i} { @include cols-offset($i); }
-  } 
+  @for $i from 1 through $grid-columns {
+    .col-lg-offset-#{$i} {
+      @include cols-offset($i);
+    }
+  }
 }
 @include bp(xl) {
-  @for $i from 1 through $grid-columns { 
-    .col-xl-offset-#{$i} { @include cols-offset($i); }
-  } 
+  @for $i from 1 through $grid-columns {
+    .col-xl-offset-#{$i} {
+      @include cols-offset($i);
+    }
+  }
 }
-
 // push classes
 
-@for $i from 1 through $grid-columns { 
-  .col-push-#{$i} { @include cols-push($i); }
-} 
+@for $i from 1 through $grid-columns {
+  .col-push-#{$i} {
+    @include cols-push($i);
+  }
+}
 @include bp(sm) {
-  @for $i from 1 through $grid-columns { 
-    .col-sm-push-#{$i} { @include cols-push($i); }
-  } 
+  @for $i from 1 through $grid-columns {
+    .col-sm-push-#{$i} {
+      @include cols-push($i);
+    }
+  }
 }
 @include bp(md) {
-  @for $i from 1 through $grid-columns { 
-    .col-md-push-#{$i} { @include cols-push($i); }
-  } 
+  @for $i from 1 through $grid-columns {
+    .col-md-push-#{$i} {
+      @include cols-push($i);
+    }
+  }
 }
 @include bp(lg) {
-  @for $i from 1 through $grid-columns { 
-    .col-lg-push-#{$i} { @include cols-push($i); }
-  } 
+  @for $i from 1 through $grid-columns {
+    .col-lg-push-#{$i} {
+      @include cols-push($i);
+    }
+  }
 }
 @include bp(xl) {
-  @for $i from 1 through $grid-columns { 
-    .col-xl-push-#{$i} { @include cols-push($i); }
-  } 
+  @for $i from 1 through $grid-columns {
+    .col-xl-push-#{$i} {
+      @include cols-push($i);
+    }
+  }
 }
-
 // pull classes
 
-@for $i from 1 through $grid-columns { 
-  .col-pull-#{$i} { @include cols-pull($i); }
-} 
+@for $i from 1 through $grid-columns {
+  .col-pull-#{$i} {
+    @include cols-pull($i);
+  }
+}
 @include bp(sm) {
-  @for $i from 1 through $grid-columns { 
-    .col-sm-pull-#{$i} { @include cols-pull($i); }
-  } 
+  @for $i from 1 through $grid-columns {
+    .col-sm-pull-#{$i} {
+      @include cols-pull($i);
+    }
+  }
 }
 @include bp(md) {
-  @for $i from 1 through $grid-columns { 
-    .col-md-pull-#{$i} { @include cols-pull($i); }
-  } 
+  @for $i from 1 through $grid-columns {
+    .col-md-pull-#{$i} {
+      @include cols-pull($i);
+    }
+  }
 }
 @include bp(lg) {
-  @for $i from 1 through $grid-columns { 
-    .col-lg-pull-#{$i} { @include cols-pull($i); }
-  } 
+  @for $i from 1 through $grid-columns {
+    .col-lg-pull-#{$i} {
+      @include cols-pull($i);
+    }
+  }
 }
 @include bp(xl) {
-  @for $i from 1 through $grid-columns { 
-    .col-xl-pull-#{$i} { @include cols-pull($i); }
-  } 
+  @for $i from 1 through $grid-columns {
+    .col-xl-pull-#{$i} {
+      @include cols-pull($i);
+    }
+  }
 }

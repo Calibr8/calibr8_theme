@@ -10,7 +10,6 @@ html {
   -ms-text-size-adjust: 100%; /* 2 */
   -webkit-text-size-adjust: 100%; /* 2 */
 }
-
 /**
  * Remove the margin in all browsers (opinionated).
  */
@@ -18,7 +17,6 @@ html {
 body {
   margin: 0;
 }
-
 /* HTML5 display definitions
    ========================================================================== */
 
@@ -42,7 +40,6 @@ section,
 summary { /* 1 */
   display: block;
 }
-
 /**
  * Add the correct display in IE 9-.
  */
@@ -53,7 +50,6 @@ progress,
 video {
   display: inline-block;
 }
-
 /**
  * Add the correct display in iOS 4-7.
  */
@@ -62,7 +58,6 @@ audio:not([controls]) {
   display: none;
   height: 0;
 }
-
 /**
  * Add the correct vertical alignment in Chrome, Firefox, and Opera.
  */
@@ -70,7 +65,6 @@ audio:not([controls]) {
 progress {
   vertical-align: baseline;
 }
-
 /**
  * Add the correct display in IE 10-.
  * 1. Add the correct display in IE.
@@ -80,7 +74,6 @@ template, /* 1 */
 [hidden] {
   display: none;
 }
-
 /* Links
    ========================================================================== */
 
@@ -93,7 +86,6 @@ a {
   background-color: transparent; /* 1 */
   -webkit-text-decoration-skip: objects; /* 2 */
 }
-
 /**
  * Remove the outline on focused links when they are also active or hovered
  * in all browsers (opinionated).
@@ -103,7 +95,6 @@ a:active,
 a:hover {
   outline-width: 0;
 }
-
 /* Text-level semantics
    ========================================================================== */
 
@@ -117,7 +108,6 @@ abbr[title] {
   text-decoration: underline; /* 2 */
   text-decoration: underline dotted; /* 2 */
 }
-
 /**
  * Prevent the duplicate application of `bolder` by the next rule in Safari 6.
  */
@@ -126,7 +116,6 @@ b,
 strong {
   font-weight: inherit;
 }
-
 /**
  * Add the correct font weight in Chrome, Edge, and Safari.
  */
@@ -135,7 +124,6 @@ b,
 strong {
   font-weight: bolder;
 }
-
 /**
  * Add the correct font style in Android 4.3-.
  */
@@ -143,7 +131,6 @@ strong {
 dfn {
   font-style: italic;
 }
-
 /**
  * Correct the font size and margin on `h1` elements within `section` and
  * `article` contexts in Chrome, Firefox, and Safari.
@@ -153,7 +140,6 @@ h1 {
   font-size: 2em;
   margin: 0.67em 0;
 }
-
 /**
  * Add the correct background and color in IE 9-.
  */
@@ -162,7 +148,6 @@ mark {
   background-color: #ff0;
   color: #000;
 }
-
 /**
  * Add the correct font size in all browsers.
  */
@@ -170,7 +155,6 @@ mark {
 small {
   font-size: 80%;
 }
-
 /**
  * Prevent `sub` and `sup` elements from affecting the line height in
  * all browsers.
@@ -183,15 +167,12 @@ sup {
   position: relative;
   vertical-align: baseline;
 }
-
 sub {
   bottom: -0.25em;
 }
-
 sup {
   top: -0.5em;
 }
-
 /* Embedded content
    ========================================================================== */
 
@@ -202,7 +183,6 @@ sup {
 img {
   border-style: none;
 }
-
 /**
  * Hide the overflow in IE.
  */
@@ -210,7 +190,6 @@ img {
 svg:not(:root) {
   overflow: hidden;
 }
-
 /* Grouping content
    ========================================================================== */
 
@@ -226,7 +205,6 @@ samp {
   font-family: monospace, monospace; /* 1 */
   font-size: 1em; /* 2 */
 }
-
 /**
  * Add the correct margin in IE 8.
  */
@@ -234,7 +212,6 @@ samp {
 figure {
   margin: 1em 40px;
 }
-
 /**
  * 1. Add the correct box sizing in Firefox.
  * 2. Show the overflow in Edge and IE.
@@ -245,7 +222,6 @@ hr {
   height: 0; /* 1 */
   overflow: visible; /* 2 */
 }
-
 /* Forms
    ========================================================================== */
 
@@ -261,7 +237,6 @@ textarea {
   font: inherit; /* 1 */
   margin: 0; /* 2 */
 }
-
 /**
  * Restore the font weight unset by the previous rule.
  */
@@ -269,7 +244,6 @@ textarea {
 optgroup {
   font-weight: bold;
 }
-
 /**
  * Show the overflow in IE.
  * 1. Show the overflow in Edge.
@@ -279,7 +253,6 @@ button,
 input { /* 1 */
   overflow: visible;
 }
-
 /**
  * Remove the inheritance of text transform in Edge, Firefox, and IE.
  * 1. Remove the inheritance of text transform in Firefox.
@@ -289,7 +262,6 @@ button,
 select { /* 1 */
   text-transform: none;
 }
-
 /**
  * 1. Prevent a WebKit bug where (2) destroys native `audio` and `video`
  *    controls in Android 4.
@@ -302,7 +274,6 @@ html [type="button"], /* 1 */
 [type="submit"] {
   -webkit-appearance: button; /* 2 */
 }
-
 /**
  * Remove the inner border and padding in Firefox.
  */
@@ -314,7 +285,6 @@ button::-moz-focus-inner,
   border-style: none;
   padding: 0;
 }
-
 /**
  * Restore the focus styles unset by the previous rule.
  */
@@ -325,7 +295,6 @@ button:-moz-focusring,
 [type="submit"]:-moz-focusring {
   outline: 1px dotted ButtonText;
 }
-
 /**
  * Change the border, margin, and padding in all browsers (opinionated).
  */
@@ -335,7 +304,6 @@ fieldset {
   margin: 0 2px;
   padding: 0.35em 0.625em 0.75em;
 }
-
 /**
  * 1. Correct the text wrapping in Edge and IE.
  * 2. Correct the color inheritance from `fieldset` elements in IE.
@@ -351,7 +319,6 @@ legend {
   padding: 0; /* 3 */
   white-space: normal; /* 1 */
 }
-
 /**
  * Remove the default vertical scrollbar in IE.
  */
@@ -359,7 +326,6 @@ legend {
 textarea {
   overflow: auto;
 }
-
 /**
  * 1. Add the correct box sizing in IE 10-.
  * 2. Remove the padding in IE 10-.
@@ -370,7 +336,6 @@ textarea {
   box-sizing: border-box; /* 1 */
   padding: 0; /* 2 */
 }
-
 /**
  * Correct the cursor style of increment and decrement buttons in Chrome.
  */
@@ -379,7 +344,6 @@ textarea {
 [type="number"]::-webkit-outer-spin-button {
   height: auto;
 }
-
 /**
  * 1. Correct the odd appearance in Chrome and Safari.
  * 2. Correct the outline style in Safari.
@@ -389,7 +353,6 @@ textarea {
   -webkit-appearance: textfield; /* 1 */
   outline-offset: -2px; /* 2 */
 }
-
 /**
  * Remove the inner padding and cancel buttons in Chrome and Safari on OS X.
  */
@@ -398,7 +361,6 @@ textarea {
 [type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
 }
-
 /**
  * Correct the text style of placeholders in Chrome, Edge, and Safari.
  */
@@ -407,7 +369,6 @@ textarea {
   color: inherit;
   opacity: 0.54;
 }
-
 /**
  * 1. Correct the inability to style clickable types in iOS and Safari.
  * 2. Change font properties to `inherit` in Safari.
