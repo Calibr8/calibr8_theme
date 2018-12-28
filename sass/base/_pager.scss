@@ -1,9 +1,11 @@
+
 // Pager
 // --------------------------------------------------
 
 .pager {
   @include clearfix();
 }
+
 ul.pager-items {
 
   // Globals
@@ -48,10 +50,10 @@ ul.pager-items {
   li.pager-item--last a {
     @include icon('arrow-right-double');
   }
-
+  
   // Controls
   li.pager-item--first,
-  li.pager-item--previous,
+  li.pager-item--previous, 
   li.pager-item--next,
   li.pager-item--last {
     a {
@@ -81,4 +83,5 @@ ul.pager-items {
       color: $color-white;
     }
   }
+  
 }

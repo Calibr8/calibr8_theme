@@ -1,26 +1,26 @@
+
 // Classes
 // --------------------------------------------------
 
 // Show / hide on mobile
 
 .hide-mobile {
-  @include bp(sm, max) {
-    display: none;
-  }
+  @include bp(sm, max) { display: none; }
 }
 .show-mobile {
-  @include bp(md, min) {
-    display: none;
-  }
+  @include bp(md, min) { display: none; }
 }
+
 // Block margin
 
 .default-block-margin-top {
-  margin-top: $default-block-margin-bottom !important;
+  margin-top: $default-block-margin-bottom !important; 
 }
+
 .default-block-margin-bottom {
-  margin-bottom: $default-block-margin-bottom !important;
+  margin-bottom: $default-block-margin-bottom !important; 
 }
+
 // Floats
 
 .float-left {
@@ -29,6 +29,7 @@
 .float-right {
   float: right;
 }
+
 // Hidden Elements
 
 .visually-hidden,
@@ -39,26 +40,28 @@
   overflow: hidden;
   height: 1px;
 }
+
 // Extends
 
 .extendfull {
-  padding-left: 3000px !important;
-  margin-left: -3000px !important;
+  padding-left:  3000px !important;
+  margin-left:  -3000px !important;
   padding-right: 3000px !important;
   margin-right: -3000px !important;
 }
 .extendleft {
-  padding-left: 3000px !important;
-  margin-left: -3000px !important;
+  padding-left:  3000px !important;
+  margin-left:  -3000px !important;
   padding-right: 0;
   margin-right: 0;
 }
 .extendright {
-  padding-left: 0;
-  margin-left: 0;
+  padding-left:  0;
+  margin-left:  0;
   padding-right: 3000px !important;
   margin-right: -3000px !important;
 }
+
 // Margin
 
 .no-margin {
@@ -84,6 +87,7 @@
 .no-margin-left {
   margin-left: 0 !important;
 }
+
 // Padding
 
 .no-padding {
@@ -109,6 +113,7 @@
 .no-padding-left {
   padding-left: 0 !important;
 }
+
 // Text
 
 .text-left {
@@ -120,6 +125,7 @@
 .text-right {
   text-align: right;
 }
+
 // Colors
 
 .color-background {
@@ -158,6 +164,7 @@
 .color-error {
   color: $color-error;
 }
+
 // Background colors
 
 .background-background {
@@ -196,6 +203,7 @@
 .background-error {
   background-color: $color-error;
 }
+
 // Border
 
 .default-border {
@@ -210,6 +218,7 @@
 .default-border-bottom {
   border-bottom: $default-border;
 }
+
 // Border-radius
 
 .default-border-radius {

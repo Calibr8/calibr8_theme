@@ -1,3 +1,4 @@
+
 // Buttons
 // --------------------------------------------------
 
@@ -7,7 +8,7 @@ input[type="submit"], input[type="reset"], input[type="button"] {
   padding: 0.6rem 2rem;
   color: $color-button;
   text-align: center;
-  @include font-size(12);
+  @include font-size(12);   
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -20,11 +21,11 @@ input[type="submit"], input[type="reset"], input[type="button"] {
   margin-bottom: 1rem;
   &:hover,
   &:focus {
-    outline: 0;
-    text-decoration: none;
-    color: $color-white;
-    border-color: $color-link-hover;
-    background-color: $color-link-hover;
+      outline: 0;
+      text-decoration: none;
+      color: $color-white;
+      border-color: $color-link-hover;
+      background-color: $color-link-hover;
   }
   &[class^='icon-'],
   &[class*=' icon-'] {
@@ -48,6 +49,7 @@ input[type="submit"], input[type="reset"], input[type="button"] {
     padding: 0.6rem;
   }
 }
+
 // Small
 .button-small {
   @include font-size(10);
@@ -59,47 +61,51 @@ input[type="submit"], input[type="reset"], input[type="button"] {
     margin-left: 0.2rem;
   }
 }
+
 // Large
 .button-large {
   @include font-size(14);
   padding: 0.8rem 2rem;
 }
+
 // Primary
 .button-primary {
-  color: $color-white;
-  background-color: $color-primary;
-  border: solid 1px $color-primary;
+    color: $color-white;
+    background-color: $color-primary;
+    border: solid 1px $color-primary;
 }
 .button-primary:hover,
 .button-primary:focus {
-  color: $color-white;
-  background-color: lighten($color-primary, 10%);
-  border-color: lighten($color-primary, 10%);
+    color: $color-white;
+    background-color: lighten($color-primary, 10%);
+    border-color: lighten($color-primary, 10%);
 }
 // Secondary
 .button-secondary {
-  color: $color-white;
-  background-color: $color-secondary;
-  border: solid 1px $color-secondary;
+    color: $color-white;
+    background-color: $color-secondary;
+    border: solid 1px $color-secondary;
 }
 .button-secondary:hover,
 .button-secondary:focus {
-  color: $color-white;
-  background-color: lighten($color-secondary, 10%);
-  border-color: lighten($color-secondary, 10%);
+    color: $color-white;
+    background-color: lighten($color-secondary, 10%);
+    border-color: lighten($color-secondary, 10%);
 }
+
 // Grey
 .button-muted {
-  color: $color-white;
-  background-color: $color-muted;
-  border: solid 1px $color-muted;
+    color: $color-white;
+    background-color: $color-muted;
+    border: solid 1px $color-muted;
 }
 .button-muted:hover,
 .button-muted:focus {
-  color: $color-white;
-  background-color: lighten($color-muted, 10%);
-  border-color: lighten($color-muted, 10%);
+    color: $color-white;
+    background-color: lighten($color-muted, 10%);
+    border-color: lighten($color-muted, 10%);
 }
+
 // Error
 .button-error {
   color: $color-white;
@@ -111,6 +117,7 @@ input[type="submit"], input[type="reset"], input[type="button"] {
   color: $color-white;
   background-color: lighten($color-error, 10%);
 }
+
 // Warning
 .button-warning {
   color: $color-white;
@@ -122,6 +129,7 @@ input[type="submit"], input[type="reset"], input[type="button"] {
   color: $color-white;
   background-color: lighten($color-warning, 10%);
 }
+
 // Status
 .button-status {
   color: $color-white;
@@ -133,6 +141,7 @@ input[type="submit"], input[type="reset"], input[type="button"] {
   color: $color-white;
   background-color: lighten($color-status, 10%);
 }
+
 .button-circle {
   display: block;
   position: relative;

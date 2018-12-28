@@ -55,13 +55,13 @@
 <div id="site-wrapper">
 
   {% if page.toolbar %}
-    <nav class="region region--toolbar clearfix">
-      <div class="container">
-        <div class="toolbar-region-wrapper">
-          {{ page.toolbar }}
-        </div>
+  <nav class="region region--toolbar clearfix">
+    <div class="container">
+      <div class="toolbar-region-wrapper">
+        {{ page.toolbar }}
       </div>
-    </nav>
+    </div>
+  </nav>
   {% endif %}
 
   <header class="region region--header clearfix">
@@ -76,34 +76,33 @@
           </div>
         {% endif %}
 
-        <a href="#" id="mobile-menu-anchor" class="icon-menu show-mobile"><span
-            class="element-invisible">{% trans %}Menu{% endtrans %}</span></a>
+        <a href="#" id="mobile-menu-anchor" class="icon-menu show-mobile"><span class="element-invisible">{% trans %}Menu{% endtrans %}</span></a>
 
       </div>
     </div>
 
     {% if page.navigation %}
-      <nav class="region region--navigation">
-        <div class="container">
-          {{ page.navigation }}
-        </div>
-      </nav>
+    <nav class="region region--navigation">
+      <div class="container">
+        {{ page.navigation }}
+      </div>
+    </nav>
     {% endif %}
 
     {% if page.mobile_menu %}
-      <nav id="mobile-menu" style="display: none;">
-        <div class="mobile-menu-inner">
-          {{ page.mobile_menu }}
-        </div>
-      </nav>
+    <nav id="mobile-menu" style="display: none;">
+      <div class="mobile-menu-inner">
+        {{ page.mobile_menu }}
+      </div>
+    </nav>
     {% endif %}
 
   </header>
 
   {% if page.full_width %}
-    <div class="region region--full-width">
-      {{ page.full_width }}
-    </div>
+  <div class="region region--full-width">
+    {{ page.full_width }}
+  </div>
   {% endif %}
 
   <div class="container">
@@ -119,46 +118,46 @@
         </div>
 
         {% if page.content_top %}
-          <div class="region region--content-top">
-            {{ page.content_top }}
-          </div>
+        <div class="region region--content-top">
+          {{ page.content_top }}
+        </div>
         {% endif %}
 
         {% if page.content %}
-          <div class="region region--content">
-            {{ page.content }}
-          </div>
+        <div class="region region--content">
+          {{ page.content }}
+        </div>
         {% endif %}
 
         {% if page.content_bottom %}
-          <div class="region region--content-bottom">
-            {{ page.content_bottom }}
-          </div>
+        <div class="region region--content-bottom">
+          {{ page.content_bottom }}
+        </div>
         {% endif %}
 
       </div>
 
       {% if page.sidebar_left %}
-        <aside {{ sidebar_left_attributes.addClass('region region--sidebar-left') }}>
-          {{ page.sidebar_left }}
-        </aside>
+      <aside {{ sidebar_left_attributes.addClass('region region--sidebar-left') }}>
+        {{ page.sidebar_left }}
+      </aside>
       {% endif %}
 
       {% if page.sidebar_right %}
-        <aside {{ sidebar_right_attributes.addClass('region region--sidebar-right') }}>
-          {{ page.sidebar_right }}
-        </aside>
+      <aside {{ sidebar_right_attributes.addClass('region region--sidebar-right') }}>
+        {{ page.sidebar_right }}
+      </aside>
       {% endif %}
 
     </div>
   </div>
 
   {% if page.footer %}
-    <footer class="region region--footer clearfix">
-      <div class="container">
-        {{ page.footer }}
-      </div>
-    </footer>
+  <footer class="region region--footer clearfix">
+    <div class="container">
+      {{ page.footer }}
+    </div>
+  </footer>
   {% endif %}
 
   {% if calibr8_cookiecompliance_placeholder %}

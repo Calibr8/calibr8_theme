@@ -1,3 +1,4 @@
+
 // Forms
 // --------------------------------------------------
 
@@ -15,6 +16,7 @@ input[type="time"],
 textarea {
   @include appearance(none);
 }
+
 fieldset {
   padding: 0;
   border-width: 0;
@@ -22,11 +24,13 @@ fieldset {
     @extend label;
   }
 }
+
 // Form item
 
 .form-item {
   margin-bottom: 2rem;
 }
+
 // Labels
 
 .form-item {
@@ -45,6 +49,7 @@ fieldset {
     padding-left: 12rem;
   }
 }
+
 // Description
 
 .form-item {
@@ -54,18 +59,21 @@ fieldset {
     p, ul, li {
       margin-bottom: 0;
     }
-  }
+  }  
 }
+
 // Prefix
 
 .field-prefix {
   margin-right: 0.5rem;
 }
+
 // Suffix
 
 .field-suffix {
   margin-left: 0.5rem;
 }
+
 // Form elements
 // --------------------------------------------------
 
@@ -101,6 +109,7 @@ input.form-color {
     outline: 0;
   }
 }
+
 // Textarea
 
 textarea {
@@ -126,6 +135,7 @@ textarea {
     outline: 0;
   }
 }
+
 // Select
 
 select {
@@ -147,12 +157,14 @@ select {
     outline: 0;
   }
 }
+
 .form-type-webform-select-other > .form-type-select {
   margin-bottom: 0;
 }
 .webform-select-other-input {
   margin-top: 1rem;
 }
+
 // Checkbox
 
 .form-type-checkbox {
@@ -165,6 +177,7 @@ select {
     font-weight: normal;
   }
 }
+
 .form-checkboxes {
   .form-type-checkbox:not(:last-child) {
     margin-bottom: 0.25rem;
@@ -173,6 +186,7 @@ select {
     margin-bottom: 0;
   }
 }
+
 // Radio
 
 .form-type-radio {
@@ -185,6 +199,7 @@ select {
     font-weight: normal;
   }
 }
+
 .form-radios {
   .form-type-radio {
     margin-bottom: 0.25rem;
@@ -193,12 +208,14 @@ select {
     margin-bottom: 0;
   }
 }
+
 // YAML multiple columns
 
 .webform-options-display-two-columns,
 .webform-options-display-three-columns {
   margin: 0;
 }
+
 // Color
 
 input[type="color"] {
@@ -212,9 +229,10 @@ input.form-color-output {
   &, &:hover, &:focus {
     border-left: 0 none;
     border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+    border-bottom-left-radius: 0;  
   }
 }
+
 // Signature
 
 .webform-signature-pad {
@@ -222,13 +240,15 @@ input.form-color-output {
   border: $form-border;
   border-radius: $form-border-radius;
 }
-// Toggle
+
+// Toggle 
 
 .form-type-webform-toggle {
   .description {
     clear: both;
   }
 }
+
 // jQuery UI overides
 // --------------------------------------------------
 
@@ -236,10 +256,11 @@ input.form-color-output {
   font-family: $default-font;
   @include font-size($form-font-size);
 }
+
 // Autocomplete
 
 .ui-autocomplete {
-  border: none;
+  border: none;  
   background: $form-background;
   .ui-menu-item {
     position: relative;
