@@ -230,7 +230,7 @@ function calibr8_theme_preprocess_field(&$variables) {
   $css_field_name = str_replace('field_', '', $variables['field_name']);
   $css_field_name = Html::cleanCssIdentifier($css_field_name);
 
-  $variables['attributes']['class'] = 'field--' . $css_field_name;
+  $variables['attributes']['class'][] = 'field--' . $css_field_name;
 
 }
 
