@@ -55,17 +55,31 @@
 // - $font-style: normal or italic
 // - $filename: filename without extension
 
-@mixin font-face($name, $font-weight, $font-style, $filename) {
-  @font-face {
-    font-family: $name;
-    src: url('#{$font-path}#{$filename}.eot');
-    src: url('#{$font-path}#{$filename}.eot?#iefix') format('embedded-opentype'),
-         // url('#{$font-path}#{$filename}.woff2') format('woff2'),
-         url('#{$font-path}#{$filename}.woff') format('woff'),
-         url('#{$font-path}#{$filename}.ttf') format('truetype'),
-         url('#{$font-path}#{$filename}.svg##{$filename}') format('svg');
-    font-weight: $font-weight;
-    font-style: $font-style;
+@mixin font-face($name, $font-weight, $font-style, $filename, $token: '') {
+  @if($token != '') {
+    @font-face {
+      font-family: $name;
+      src: url('#{$font-path}/#{$filename}.eot?itok=#{$token}');
+      src: url('#{$font-path}/#{$filename}.eot?itok=#{$token}#iefix') format('embedded-opentype'),
+        // url('#{$font-path}/#{$filename}.woff2') format('woff2'),
+      url('#{$font-path}/#{$filename}.woff?itok=#{$token}') format('woff'),
+      url('#{$font-path}/#{$filename}.ttf?itok=#{$token}') format('truetype'),
+      url('#{$font-path}/#{$filename}.svg?itok=#{$token}##{$filename}') format('svg');
+      font-weight: $font-weight;
+      font-style: $font-style;
+    }
+  } @else {
+    @font-face {
+      font-family: $name;
+      src: url('#{$font-path}/#{$filename}.eot');
+      src: url('#{$font-path}/#{$filename}.eot?#iefix') format('embedded-opentype'),
+        // url('#{$font-path}/#{$filename}.woff2') format('woff2'),
+      url('#{$font-path}/#{$filename}.woff') format('woff'),
+      url('#{$font-path}/#{$filename}.ttf') format('truetype'),
+      url('#{$font-path}/#{$filename}.svg##{$filename}') format('svg');
+      font-weight: $font-weight;
+      font-style: $font-style;
+    }
   }
 }
 
